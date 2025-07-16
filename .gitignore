@@ -10,3 +10,5 @@ server/dist/
 # Ignore .env files
 client/.env
 server/.env
+
+logs/*.log

@@ -24,7 +24,7 @@ export default function UserForm() {
       setFormData({ name: "", email: "", password: "", phone: "" });
       navigate("/dashboard");
     } catch (err) {
-      alert("Error creating user.");
+      alert("Error creating user.",err);
     }
   };
 
