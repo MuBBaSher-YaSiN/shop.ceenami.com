@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRegisterMutation } from "../features/auth/authApiSlice";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
+import { useRegisterMutation } from "../../features/auth/authApiSlice";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 

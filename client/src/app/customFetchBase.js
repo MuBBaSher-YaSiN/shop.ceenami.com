@@ -19,20 +19,32 @@ export const customBaseQuery = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    // ⛔ Unauthorized – try to refresh the token
+    console.warn("🔐 First request failed with 401:", result);
+
     const refreshResult = await baseQuery("/auth/refresh-token", api, extraOptions);
+    console.log("🔁 Refresh token result:", refreshResult);
 
     if (refreshResult?.data?.accessToken) {
       api.dispatch(setCredentials(refreshResult.data));
+      toast.dismiss(); // close old toasts
+toast.info("🔐 Session refreshed");
 
-      // ✅ Retry original request with new token
+
+      // Retry original query
       result = await baseQuery(args, api, extraOptions);
-      toast.info("⛔ Token expired — refreshing...");
     } else {
-      // ❌ Refresh failed – logout user
       api.dispatch(logout());
+
+      return {
+        error: {
+          status: refreshResult?.error?.status || 403,
+          data: refreshResult?.error?.data || { message: "Refresh failed" },
+        },
+      };
     }
   }
 
   return result;
 };
+
+

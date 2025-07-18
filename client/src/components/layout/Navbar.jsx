@@ -1,11 +1,12 @@
 // src/components/layout/Navbar.jsx
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/golden-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../features/auth/authApiSlice";
 import { logout as logoutAction } from "../../features/auth/authSlice";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
   const { user } = useSelector((state) => state.auth);
@@ -14,6 +15,7 @@ export default function Navbar() {
     try {
       await logout().unwrap();
       dispatch(logoutAction());
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -29,7 +31,7 @@ export default function Navbar() {
       <div className="space-x-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium">
         {!user && (
           <>
-            <Link to="/" className="text-[#091636] hover:text-[#d5b56e] transition">Register</Link>
+            <Link to="/register" className="text-[#091636] hover:text-[#d5b56e] transition">Register</Link>
             <Link to="/login" className="text-[#091636] hover:text-[#d5b56e] transition">Login</Link>
           </>
         )}

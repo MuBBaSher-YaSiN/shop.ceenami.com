@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation } from "../features/auth/authApiSlice";
-import { setCredentials } from "../features/auth/authSlice";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { setCredentials } from "../../features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 
 export default function Login() {
   const { user, authReady } = useSelector((state) => state.auth);
@@ -35,18 +35,31 @@ export default function Login() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await login(formData).unwrap();
-      const { user, accessToken } = res;
-      const role = user.role;
-      dispatch(setCredentials({ user, accessToken, role }));
-      toast.success("✅ Login successful!");
-    } catch (err) {
-      toast.error(err?.data?.message || "❌ Login failed");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await login(formData).unwrap();
+    const { user, accessToken } = res;
+    const role = user.role;
+
+    dispatch(setCredentials({ user, accessToken, role }));
+    toast.success("✅ Login successful!");
+
+    // 🔁 Redirection logic
+    const from = location.state?.from || "/";
+    if (role === "admin") {
+      navigate("/dashboard");
+    } else if (role === "user") {
+      navigate(from); // go back to original route (e.g. /products/:id)
+    } else {
+      navigate("/unauthorized");
     }
-  };
+  } catch (err) {
+    toast.error(err?.data?.message || "❌ Login failed");
+  }
+};
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center  px-4 sm:px-6 lg:px-12  font-arkhip">

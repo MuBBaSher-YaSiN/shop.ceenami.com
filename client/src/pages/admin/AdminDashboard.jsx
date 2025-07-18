@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useGetAllUsersQuery } from "../../features/auth/authApiSlice";
 
 export default function AdminDashboard() {
@@ -5,10 +6,31 @@ export default function AdminDashboard() {
   const users = data?.data || [];
 
   return (
-    <div className="w-full min-h-[80vh] flex justify-center items-start mt-6">
-      <div className="w-full max-w-screen-xl bg-white/5 backdrop-blur-md text-white p-6 rounded-xl border border-[#d5b56e] shadow-2xl">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#d5b56e] mb-6 text-center">
-          Admin Dashboard
+    <div className="w-full min-h-[80vh] flex flex-col lg:flex-row gap-6 mt-6">
+      {/* Sidebar */}
+      <aside className="lg:w-1/4 w-full bg-white/10 p-4 rounded-lg border border-[#d5b56e] text-gray-600">
+        <h2 className="text-xl font-bold mb-4 text-[#d5b56e]">Admin Panel</h2>
+        <nav className="space-y-3">
+          <Link
+            to="/dashboard"
+            className="block hover:underline text-gray-600"
+          >
+            🧭 Dashboard
+          </Link>
+          <Link
+            to="/products"
+            className="block hover:underline text-gray-600"
+          >
+            📦 Manage Products
+          </Link>
+          {/* Optional: Add more links here */}
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="lg:w-3/4 w-full bg-white/5 backdrop-blur-md text-white p-6 rounded-xl border border-[#d5b56e] shadow-2xl">
+        <h2 className="text-2xl font-bold text-[#d5b56e] mb-6 text-center">
+          Users List
         </h2>
 
         {isLoading ? (
@@ -38,7 +60,7 @@ export default function AdminDashboard() {
             </table>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

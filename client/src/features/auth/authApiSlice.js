@@ -33,14 +33,17 @@ export const authApi = createApi({
       }),
       invalidatesTags: ["Auth"],
     }),
-
     refreshToken: builder.query({
   query: () => ({
     url: "/auth/refresh-token",
-    method: "POST", 
+    method: "GET",
+    credentials: "include",
   }),
-  providesTags: ["Auth"],
 }),
+
+
+
+ 
 
 
     getAllUsers: builder.query({
