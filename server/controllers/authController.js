@@ -2,7 +2,8 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateTokens } from "../utils/generateToken.js";
-// Register new user
+
+// 📌 Register new user
 export const registerUser = async (req, res, next) => {
   try {
     const { name, email, password, profileImage, role } = req.body;
@@ -35,8 +36,7 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
-// Login user
-
+// 🔐 Login user
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -58,11 +58,11 @@ export const loginUser = async (req, res, next) => {
     const payload = { userId: user._id, role: user.role };
     const { accessToken, refreshToken } = generateTokens(payload);
 
-    // Store refresh token in DB (good practice)
-    user.refreshToken = refreshToken;
+    // ✅ Push refresh token into the array
+    user.refreshTokens.push(refreshToken);
     await user.save();
 
-    // Send refresh token in httpOnly cookie
+    // ✅ Send refresh token in httpOnly cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -70,7 +70,7 @@ export const loginUser = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    // Send access token and user info
+    // ✅ Send access token and user info
     res.status(200).json({
       success: true,
       message: "Login successful",
@@ -90,16 +90,20 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-// logout
+// 🚪 Logout user
 export const logoutUser = async (req, res, next) => {
   try {
     const refreshToken = req.cookies.refreshToken;
+
     if (refreshToken) {
-      await User.findOneAndUpdate({ refreshToken }, { $unset: { refreshToken: "" } });
+      await User.findOneAndUpdate(
+        { refreshTokens: refreshToken },
+        { $pull: { refreshTokens: refreshToken } }
+      );
       res.clearCookie("refreshToken");
     }
 
-    res.status(200).json({ message: "Logged out successfully" });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
   } catch (error) {
     next(error);
   }

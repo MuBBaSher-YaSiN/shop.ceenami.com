@@ -1,33 +1,65 @@
-import { Routes, Route, Link } from "react-router-dom";
-import UserForm from "./components/UserForm";
-import Dashboard from "./components/Dashboard";
-// import logo from './assets/Black-logo.png';
-// import logo from './assets/Blue-logo.png';
-import logo from './assets/golden-logo.png';
+// src/app/App.jsx
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import Unauthorized from "./pages/Unauthorized";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Navbar from "./components/layout/Navbar";
+import NotFound from "./components/ui/errors/NotFound";
+import Loader from "./components/ui/Loader";
 
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "./features/auth/authSlice";
+import { useLazyRefreshTokenQuery } from "./features/auth/authApiSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
+  const dispatch = useDispatch();
+  const [checked, setChecked] = useState(false);
+  const [triggerRefresh, { isLoading }] = useLazyRefreshTokenQuery();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const result = await triggerRefresh().unwrap();
+        if (result?.data?.accessToken) {
+          dispatch(setCredentials({
+            accessToken: result.data.accessToken,
+            user: result.data.user,
+            role: result.data.user.role,
+          }));
+        }
+      } catch (error) {
+        const hasToken = document.cookie.includes("refreshToken");
+        if (hasToken) toast.error("Session expired. Please login again.");
+      } finally {
+        setChecked(true);
+      }
+    };
+
+    checkAuth();
+  }, [dispatch, triggerRefresh]);
+
+  const { authReady } = useSelector((state) => state.auth);
+if (!checked || isLoading || !authReady) return <Loader />;
+
   return (
-<div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] px-4 sm:px-6 lg:px-12 py-6">
-     <nav className="flex justify-between items-center mb-10">
-<img
-  src={logo}
-  alt="Ceenami Logo"
-  className="w-24 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-20 object-contain"
-/>
-
-  <div className="space-x-4 text-xs sm:text-sm md:text-base  lg:text-lg xl:text-xl font-medium">
-  <Link to="/" className="text-[#091636] hover:text-[#d5b56e] transition">User Form</Link>
-  <Link to="/dashboard" className="text-[#091636] hover:text-[#d5b56e] transition">Dashboard</Link>
-</div>
-
-</nav>
-
-
+    <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] px-4 sm:px-6 lg:px-12 py-6">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Navbar />
 
       <Routes>
-        <Route path="/" element={<UserForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="*" element={<NotFound />} />
+        {/* Protected */}
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/dashboard" element={<AdminDashboard />} />
+        </Route>
       </Routes>
     </div>
   );
