@@ -9,7 +9,9 @@ export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
-  const { user } = useSelector((state) => state.auth);
+  const { user, authReady } = useSelector((state) => state.auth);
+
+  if (!authReady) return null; // or a minimal placeholder like <div className="h-20" />
 
   const handleLogout = async () => {
     try {
@@ -29,15 +31,29 @@ export default function Navbar() {
         className="w-24 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-20 object-contain"
       />
       <div className="space-x-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium">
-        {!user && (
+        {!user ? (
           <>
-            <Link to="/register" className="text-[#091636] hover:text-[#d5b56e] transition">Register</Link>
-            <Link to="/login" className="text-[#091636] hover:text-[#d5b56e] transition">Login</Link>
+            <Link
+              to="/register"
+              className="text-[#091636] hover:text-[#d5b56e] transition"
+            >
+              Register
+            </Link>
+            <Link
+              to="/login"
+              className="text-[#091636] hover:text-[#d5b56e] transition"
+            >
+              Login
+            </Link>
           </>
-        )}
-        {user && (
+        ) : (
           <>
-            <Link to="/dashboard" className="text-[#091636] hover:text-[#d5b56e] transition">Dashboard</Link>
+            <Link
+              to="/dashboard"
+              className="text-[#091636] hover:text-[#d5b56e] transition"
+            >
+              Dashboard
+            </Link>
             <button
               onClick={handleLogout}
               className="text-[#091636] hover:text-red-500 transition"

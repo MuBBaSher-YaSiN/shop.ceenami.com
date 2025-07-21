@@ -1,8 +1,10 @@
 // src/features/auth/AuthUtils.js
-import { setCredentials, logout } from "./authSlice";
+
 import { authApi } from "./authApiSlice";
 
 // ✅ Accepts `dispatch` directly now — NOT store
+import { setCredentials, logout, markAuthReady } from "./authSlice";
+
 export const loadUserFromRefreshToken = async (dispatch) => {
   try {
     const result = await dispatch(
@@ -15,6 +17,8 @@ export const loadUserFromRefreshToken = async (dispatch) => {
     }
   } catch (error) {
     dispatch(logout());
-    throw error;
+  } finally {
+    dispatch(markAuthReady()); // ✅ Always mark done
   }
 };
+

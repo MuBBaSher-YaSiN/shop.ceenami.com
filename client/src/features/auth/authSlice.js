@@ -26,8 +26,11 @@ const authSlice = createSlice({
       state.role = null;
       state.authReady = true; 
     },
+    markAuthReady: (state) => {
+    state.authReady = true;
+  }
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout,markAuthReady } = authSlice.actions;
 export default authSlice.reducer;

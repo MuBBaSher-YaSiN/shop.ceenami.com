@@ -1,4 +1,4 @@
-
+// src/layouts/MainLayout.jsx
 import { Outlet } from "react-router-dom";
 import logo from "../assets/golden-logo.png";
 

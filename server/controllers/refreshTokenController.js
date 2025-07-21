@@ -1,3 +1,4 @@
+// server/controllers/refreshTokenController
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { generateTokens } from "../utils/generateToken.js";

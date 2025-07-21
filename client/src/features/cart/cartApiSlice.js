@@ -1,10 +1,10 @@
 // src/features/cart/cartApiSlice.js
 import { apiSlice } from "../api/apiSlice";
 
-export const cartApi = apiSlice.injectEndpoints({
+export const cartApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCart: builder.query({
-      query: () => "/cart",
+      query: () => "/cart", // GET /api/cart
       providesTags: ["Cart"],
     }),
     addToCart: builder.mutation({
@@ -15,9 +15,9 @@ export const cartApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Cart"],
     }),
-    removeFromCart: builder.mutation({
-      query: (productId) => ({
-        url: `/cart/${productId}`,
+    deleteFromCart: builder.mutation({
+      query: (cartItemId) => ({
+        url: `/cart/${cartItemId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Cart"],
@@ -28,5 +28,5 @@ export const cartApi = apiSlice.injectEndpoints({
 export const {
   useGetCartQuery,
   useAddToCartMutation,
-  useRemoveFromCartMutation,
-} = cartApi;
+  useDeleteFromCartMutation,
+} = cartApiSlice;
