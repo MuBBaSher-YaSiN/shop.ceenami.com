@@ -40,7 +40,22 @@ export const authApi = createApi({
     credentials: "include",
   }),
 }),
+deleteUser: builder.mutation({
+  query: (id) => ({
+    url: `/users/${id}`,
+    method: "DELETE",
+  }),
+  invalidatesTags: ["Users"],
+}),
 
+updateUser: builder.mutation({
+  query: ({ id, data }) => ({
+    url: `/users/${id}`,
+    method: "PUT",
+    body: data,
+  }),
+  invalidatesTags: ["Users"],
+}),
 
 
  
@@ -59,5 +74,7 @@ export const {
   useRegisterMutation,
   useLazyRefreshTokenQuery,
   useGetAllUsersQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
   useLogoutMutation,
 } = authApi;
