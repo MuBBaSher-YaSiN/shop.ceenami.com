@@ -1,43 +1,26 @@
 // src/components/CartItem.jsx
-import { useDeleteFromCartMutation } from "../features/cart/cartApiSlice";
-import { toast } from "react-toastify";
-
 export default function CartItem({ item }) {
-  const [deleteFromCart, { isLoading }] = useDeleteFromCartMutation();
+  const product = item?.productId;
 
-  const handleRemove = async () => {
-    try {
-      await deleteFromCart(item._id).unwrap();
-      toast.success("Item removed from cart");
-    } catch (err) {
-      console.error("Remove failed", err);
-      toast.error("Failed to remove item");
-    }
-  };
+  if (!product) return null;
 
   return (
-    <div className="flex items-center justify-between border-b border-gray-600 py-4">
-      <div className="flex items-center space-x-4">
+    <div className="flex items-center justify-between gap-4 py-4 border-b border-white/20">
+      <div className="flex items-center gap-4">
         <img
-          src={item.product.image}
-          alt={item.product.title}
-          className="w-16 h-16 object-cover rounded border border-[#d5b56e]"
+          src={product.image || "https://via.placeholder.com/80"}
+          alt={product.title}
+          className="w-20 h-20 object-cover rounded border border-[#d5b56e]"
         />
         <div>
-          <h3 className="text-lg font-semibold text-[#d5b56e]">
-            {item.product.title}
-          </h3>
-          <p className="text-gray-300">${item.product.price}</p>
+          <h3 className="text-lg font-bold text-[#d5b56e]">{product.title}</h3>
+          <p className="text-white">Price: ${product.price}</p>
+          <p className="text-gray-400">Qty: {item.quantity}</p>
         </div>
       </div>
-
-      <button
-        onClick={handleRemove}
-        disabled={isLoading}
-        className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-      >
-        {isLoading ? "Removing..." : "Remove"}
-      </button>
+      <div className="text-white font-semibold">
+        ${(product.price * item.quantity).toFixed(2)}
+      </div>
     </div>
   );
 }

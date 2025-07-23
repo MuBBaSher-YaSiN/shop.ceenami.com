@@ -8,9 +8,9 @@ export default function Home() {
 
   const products = data?.data || [];
 
-  console.log("🔁 isLoading:", isLoading);
-  console.log("❌ isError:", isError);
-  console.log("📦 product data:", data);
+  // console.log("🔁 isLoading:", isLoading);
+  // console.log("❌ isError:", isError);
+  // console.log("📦 product data:", data);
 
   if (!authReady) return <p className="text-white text-center">Waiting for auth...</p>;
 

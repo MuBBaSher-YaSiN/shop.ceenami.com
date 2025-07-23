@@ -36,7 +36,7 @@ export const authApi = createApi({
     refreshToken: builder.query({
   query: () => ({
     url: "/auth/refresh-token",
-    method: "GET",
+    method: "POST",
     credentials: "include",
   }),
 }),

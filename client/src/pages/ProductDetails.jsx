@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../features/products/productApiSlice";
-import { useAddToCartMutation } from "../features/cart/cartApiSlice";
+import { useUpdateCartMutation } from "../features/cart/cartApiSlice";
 import Loader from "../components/ui/Loader";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -9,18 +9,23 @@ export default function ProductDetails() {
   const { id } = useParams();
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductByIdQuery(id);
-  const [addToCart, { isLoading: adding }] = useAddToCartMutation();
+ const [updateCart, { isLoading: adding }] = useUpdateCartMutation();
 
   const product = data?.data;
 
-  const handleAdd = async () => {
-    try {
-      await addToCart(product?._id).unwrap();
-      toast.success("✅ Added to cart!");
-    } catch (err) {
-      toast.error(err?.data?.message || "❌ Failed to add to cart");
-    }
-  };
+const handleAdd = async () => {
+  try {
+    const cartAddedData = await  updateCart({
+      productId: product._id,
+      quantity: 1,
+    }).unwrap();
+    toast.success("✅ Added to cart!");
+    console.log('cart added😁😁😀',cartAddedData )
+  } catch (err) {
+    toast.error(err?.data?.message || "❌ Failed to add to cart");
+  }
+};
+
 
   if (isLoading || !authReady) return <Loader />;
   if (isError || !product)
@@ -38,7 +43,7 @@ export default function ProductDetails() {
           <h2 className="text-3xl font-bold text-[#d5b56e] mb-4">
             {product.title}
           </h2>
-          <p className="text-lg mb-4">
+          <p className="text-lg mb-4 text-gray-700">
             Minimal Sneakers combine comfort and style with a sleek silhouette. Built for everyday wear, they feature premium materials, durable soles, and breathable mesh. A must-have choice for modern wardrobes.
           </p>
           <p className="text-xl font-semibold text-[#d5b56e] mb-6">

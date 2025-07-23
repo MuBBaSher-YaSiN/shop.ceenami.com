@@ -1,54 +1,66 @@
-// src/pages/Cart.jsx
 import { useSelector } from "react-redux";
 import { useGetCartQuery } from "../features/cart/cartApiSlice";
-import CartItem from "../components/CartItem";
 import Loader from "../components/ui/Loader";
-import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const { authReady } = useSelector((state) => state.auth);
+
   const { data, isLoading, isError } = useGetCartQuery();
 
-  const items = data?.data || [];
+  if (!authReady || isLoading) {
+    return <Loader message="Loading your cart..." />;
+  }
 
-  const total = items.reduce((acc, item) => acc + item.product.price, 0);
-
-  if (isLoading) return <Loader />;
-  if (isError)
+  if (isError) {
     return (
-      <p className="text-center text-red-500">
-        ❌ Failed to load your cart items.
+      <p className="text-red-500 text-center mt-10">❌ Failed to load cart.</p>
+    );
+  }
+
+  if (!data || !data.success || !data.data?.cart) {
+    return (
+      <p className="text-red-500 text-center mt-10">❌ Unexpected cart data.</p>
+    );
+  }
+
+  const cart = data.data.cart;
+  console.log("cart data is here:", cart);
+  // ✅ Empty cart
+  if (!cart.products || cart.products.length === 0) {
+    return (
+      <p className="text-center text-black mt-10">
+        🛒 Your cart is empty.
       </p>
     );
+  }
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-6 text-white font-arkhip">
-      <h2 className="text-3xl font-bold text-[#d5b56e] mb-6 text-center">
-        Your Cart
-      </h2>
-
-      {items.length === 0 ? (
-        <p className="text-center text-gray-400">Your cart is empty 🛒</p>
-      ) : (
-        <>
-          {items.map((item) => (
-            <CartItem key={item._id} item={item} />
-          ))}
-
-          <div className="text-right mt-6 text-xl">
-            <p className="text-[#d5b56e] font-semibold">
-              Total: ${total.toFixed(2)}
+    <div className="max-w-4xl mx-auto py-12 px-6 text-black font-arkhip">
+      <h2 className="text-3xl text-[#d5b56e] font-bold mb-6">Your Cart</h2>
+      <div className="space-y-6">
+        {cart.products.map((item) => (
+          <div
+            key={item._id}
+            className="flex justify-between items-center border-b border-[#d5b56e] py-4"
+          >
+            <div>
+              <p className="text-lg  text-black font-semibold">
+                {item.productId?.title || "Unknown Product"}
+              </p>
+              <p className="text-sm text-gray-700">Quantity: {item.quantity}</p>
+            </div>
+            <p className="text-[#d5b56e] font-bold">
+              Rs{" "}
+              {item.productId?.price
+                ? item.productId.price * item.quantity
+                : "N/A"}
             </p>
-            <button
-              onClick={() => navigate("/checkout")}
-              className="mt-4 bg-[#d5b56e] text-black px-6 py-2 rounded hover:bg-yellow-600"
-            >
-              Proceed to Checkout
-            </button>
           </div>
-        </>
-      )}
+        ))}
+        <div className="text-right text-xl font-semibold text-[#d5b56e]">
+          Total: Rs {cart.totalAmount}
+        </div>
+      </div>
     </div>
   );
 }

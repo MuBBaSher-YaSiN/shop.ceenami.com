@@ -24,7 +24,7 @@ export default function Login() {
     if (user && !location.state?.fromLogin && !hasShownToast.current) {
       toast.info("✅ You are already logged in.");
       hasShownToast.current = true;
-      navigate("/dashboard", { replace: true });
+      navigate("/", { replace: true });
     }
 
     if (location.state?.fromProtected && !hasShownToast.current) {

@@ -16,8 +16,8 @@ const authSlice = createSlice({
       console.log("🔐 Setting credentials:", action.payload);
       const { user, accessToken, role } = action.payload;
       state.user = user;
-      state.accessToken = accessToken; // ✅ consistent with rest of code
-      state.role = role;
+      state.accessToken = accessToken; 
+      state.role = role || user?.role || null; // ✅ fallback
       state.authReady = true; 
     },
     logout: (state) => {

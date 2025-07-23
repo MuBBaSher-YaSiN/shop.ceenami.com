@@ -48,6 +48,12 @@ export default function Navbar() {
           </>
         ) : (
           <>
+          <Link to="/" className="text-[#d5b56e] hover:underline">
+ Home
+</Link>
+<Link to="/cart" className="text-[#d5b56e] hover:underline">
+  View Cart
+</Link>
             <Link
               to="/dashboard"
               className="text-[#091636] hover:text-[#d5b56e] transition"

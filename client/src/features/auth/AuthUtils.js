@@ -11,7 +11,8 @@ export const loadUserFromRefreshToken = async (dispatch) => {
       authApi.endpoints.refreshToken.initiate()
     ).unwrap();
 
-    const { accessToken, user, role } = result;
+    const { accessToken, user } = result;
+const role = user.role;
     if (accessToken) {
       dispatch(setCredentials({ user, accessToken, role }));
     }
