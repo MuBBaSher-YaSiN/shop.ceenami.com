@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { useGetCartQuery } from "../features/cart/cartApiSlice";
 import Loader from "../components/ui/Loader";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const { authReady } = useSelector((state) => state.auth);
-
   const { data, isLoading, isError } = useGetCartQuery();
 
   if (!authReady || isLoading) {
@@ -24,8 +24,6 @@ export default function Cart() {
   }
 
   const cart = data.data.cart;
-  console.log("cart data is here:", cart);
-  // ✅ Empty cart
   if (!cart.products || cart.products.length === 0) {
     return (
       <p className="text-center text-black mt-10">
@@ -36,7 +34,7 @@ export default function Cart() {
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-6 text-black font-arkhip">
-      <h2 className="text-3xl text-[#d5b56e] font-bold mb-6">Your Cart</h2>
+      <h2 className="text-3xl  font-bold mb-6">Your Cart</h2>
       <div className="space-y-6">
         {cart.products.map((item) => (
           <div
@@ -44,7 +42,7 @@ export default function Cart() {
             className="flex justify-between items-center border-b border-[#d5b56e] py-4"
           >
             <div>
-              <p className="text-lg  text-black font-semibold">
+              <p className="text-lg font-semibold">
                 {item.productId?.title || "Unknown Product"}
               </p>
               <p className="text-sm text-gray-700">Quantity: {item.quantity}</p>
@@ -60,6 +58,15 @@ export default function Cart() {
         <div className="text-right text-xl font-semibold text-[#d5b56e]">
           Total: Rs {cart.totalAmount}
         </div>
+      </div>
+
+      <div className="text-right mt-6 hover:text-white text-black">
+        <Link
+          to="/checkout"
+          className="bg-[#d5b56e]  px-6 py-2 rounded font-semibold hover:bg-[#c4a85a] transition"
+        >
+          Proceed to Checkout
+        </Link>
       </div>
     </div>
   );

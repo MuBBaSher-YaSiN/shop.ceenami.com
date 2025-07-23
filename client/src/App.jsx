@@ -18,7 +18,7 @@ import { loadUserFromRefreshToken } from "./features/auth/AuthUtils"; // ✅ Imp
 import Cart from "./pages/Cart";
 import ManageProducts from "./pages/admin/ManageProducts";
 import Checkout from "./pages/Checkout";
-
+import OrderSuccess from "./pages/OrderSuccess"
 export default function App() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
@@ -58,7 +58,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<NotFound />} />
-
+<Route path="/order-success" element={<OrderSuccess />} />
         {/* ✅ Protected Routes */}
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
   <Route path="/checkout" element={<Checkout />} />
