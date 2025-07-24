@@ -18,11 +18,10 @@ export default function Register() {
   const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
 
   useEffect(() => {
-  if (user) {
-    navigate("/dashboard");
-  }
-}, [user, navigate]);
-
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

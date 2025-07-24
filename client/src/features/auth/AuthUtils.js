@@ -8,11 +8,11 @@ import { setCredentials, logout, markAuthReady } from "./authSlice";
 export const loadUserFromRefreshToken = async (dispatch) => {
   try {
     const result = await dispatch(
-      authApi.endpoints.refreshToken.initiate()
+      authApi.endpoints.refreshToken.initiate(),
     ).unwrap();
 
     const { accessToken, user } = result;
-const role = user.role;
+    const role = user.role;
     if (accessToken) {
       dispatch(setCredentials({ user, accessToken, role }));
     }
@@ -22,4 +22,3 @@ const role = user.role;
     dispatch(markAuthReady()); //  Always mark done
   }
 };
-

@@ -1,6 +1,6 @@
 import Cart from "../models/Cart.js";
 import User from "../models/User.js";
-import logger from '../utils/logger.js';
+import logger from "../utils/logger.js";
 
 // CREATE CART
 export const createCart = async (req, res, next) => {
@@ -9,11 +9,16 @@ export const createCart = async (req, res, next) => {
     const userId = req.user.userId;
 
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
 
     const existingCart = await Cart.findOne({ user: userId });
     if (existingCart) {
-      return res.status(400).json({ success: false, message: "Cart already exists" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Cart already exists" });
     }
 
     const cart = new Cart({
@@ -40,12 +45,17 @@ export const createCart = async (req, res, next) => {
 export const getUserCart = async (req, res, next) => {
   try {
     const userId = req.user.userId;
-    const cart = await Cart.findOne({ user: userId }).populate("products.productId");
+    const cart = await Cart.findOne({ user: userId }).populate(
+      "products.productId",
+    );
 
-    if (!cart) return res.status(404).json({ success: false, message: "Cart not found" });
+    if (!cart)
+      return res
+        .status(404)
+        .json({ success: false, message: "Cart not found" });
 
     // 🧹 Remove products whose references no longer exist
-    cart.products = cart.products.filter(p => p.productId !== null);
+    cart.products = cart.products.filter((p) => p.productId !== null);
 
     res.json({
       success: true,
@@ -77,7 +87,7 @@ export const updateCart = async (req, res, next) => {
     }
 
     const existingItem = cart.products.find(
-      (p) => p.productId.toString() === productId
+      (p) => p.productId.toString() === productId,
     );
 
     if (existingItem) {
@@ -88,12 +98,12 @@ export const updateCart = async (req, res, next) => {
 
     // 🧹 Populate and clean deleted product references
     await cart.populate("products.productId");
-    cart.products = cart.products.filter(p => p.productId !== null); //  filter orphaned products
+    cart.products = cart.products.filter((p) => p.productId !== null); //  filter orphaned products
 
     // 🔄 Recalculate total
     cart.totalAmount = cart.products.reduce(
       (acc, item) => acc + item.quantity * item.productId.price,
-      0
+      0,
     );
 
     await cart.save();
@@ -118,7 +128,9 @@ export const removeCartItem = async (req, res, next) => {
     const cart = await Cart.findOne({ user: userId });
     if (!cart) return res.status(404).json({ error: "Cart not found" });
 
-    const updatedProducts = cart.products.filter(p => p.productId.toString() !== productId);
+    const updatedProducts = cart.products.filter(
+      (p) => p.productId.toString() !== productId,
+    );
     if (updatedProducts.length === cart.products.length) {
       return res.status(404).json({ error: "Product not found in cart" });
     }

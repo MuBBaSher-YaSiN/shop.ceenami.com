@@ -18,9 +18,7 @@ export const productValidationRules = [
     .isFloat({ gt: 0 })
     .withMessage("Price must be a number greater than 0"),
 
-  body("category")
-    .notEmpty()
-    .withMessage("Category is required"),
+  body("category").notEmpty().withMessage("Category is required"),
 
   body("stock")
     .optional()

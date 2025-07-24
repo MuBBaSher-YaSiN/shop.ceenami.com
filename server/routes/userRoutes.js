@@ -13,7 +13,7 @@ import {
   canEditUser,
 } from "../middlewares/authMiddleware.js";
 
-import validate  from "../middlewares/validate.js";
+import validate from "../middlewares/validate.js";
 import {
   getUserValidator,
   updateUserValidator,
@@ -32,7 +32,7 @@ router.get(
   authorizeRoles("admin"),
   getUserValidator,
   validate,
-  getUserById
+  getUserById,
 );
 
 router.put(
@@ -41,7 +41,7 @@ router.put(
   authorizeRoles("admin"),
   promoteUserValidator,
   validate,
-  promoteToAdmin
+  promoteToAdmin,
 );
 
 // Admin or self
@@ -51,7 +51,7 @@ router.put(
   canEditUser,
   updateUserValidator,
   validate,
-  updateUser
+  updateUser,
 );
 
 router.delete(
@@ -60,7 +60,7 @@ router.delete(
   canEditUser,
   deleteUserValidator,
   validate,
-  deleteUser
+  deleteUser,
 );
 
 export default router;

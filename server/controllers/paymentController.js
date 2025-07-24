@@ -1,5 +1,5 @@
-import Stripe from 'stripe';
-import logger from '../utils/logger.js';
+import Stripe from "stripe";
+import logger from "../utils/logger.js";
 
 export const createPaymentIntent = async (req, res, next) => {
   try {

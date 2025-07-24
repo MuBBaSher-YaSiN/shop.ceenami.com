@@ -2,8 +2,12 @@
 import { body, param } from "express-validator";
 
 export const validateCreateCart = [
-  body("products").isArray({ min: 1 }).withMessage("Products must be an array with at least one item"),
-  body("products.*.productId").notEmpty().withMessage("Each product must have a productId"),
+  body("products")
+    .isArray({ min: 1 })
+    .withMessage("Products must be an array with at least one item"),
+  body("products.*.productId")
+    .notEmpty()
+    .withMessage("Each product must have a productId"),
   body("products.*.quantity")
     .isInt({ min: 1 })
     .withMessage("Quantity must be at least 1"),
@@ -14,9 +18,7 @@ export const validateCreateCart = [
 
 export const validateUpdateCart = [
   body("productId").notEmpty().withMessage("productId is required"),
-  body("quantity")
-    .isInt({ min: 1 })
-    .withMessage("Quantity must be at least 1"),
+  body("quantity").isInt({ min: 1 }).withMessage("Quantity must be at least 1"),
 ];
 
 export const validateRemoveCartItem = [

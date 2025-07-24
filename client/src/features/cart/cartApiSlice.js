@@ -7,23 +7,23 @@ export const cartApiSlice = apiSlice.injectEndpoints({
       query: () => "/cart", // GET /api/cart
       providesTags: ["Cart"],
     }),
-//    addToCart: builder.mutation({
-//   query: ({ productId, quantity, price }) => ({
-//     url: "/cart",
-//     method: "POST",
-//     body: {
-//       products: [
-//         {
-//           productId,
-//           quantity,
-//           price,
-//         },
-//       ],
-//       totalAmount: price * quantity,
-//     },
-//   }),
-//   invalidatesTags: ["Cart"],
-// }),
+    //    addToCart: builder.mutation({
+    //   query: ({ productId, quantity, price }) => ({
+    //     url: "/cart",
+    //     method: "POST",
+    //     body: {
+    //       products: [
+    //         {
+    //           productId,
+    //           quantity,
+    //           price,
+    //         },
+    //       ],
+    //       totalAmount: price * quantity,
+    //     },
+    //   }),
+    //   invalidatesTags: ["Cart"],
+    // }),
 
     deleteFromCart: builder.mutation({
       query: (cartItemId) => ({
@@ -34,21 +34,20 @@ export const cartApiSlice = apiSlice.injectEndpoints({
     }),
     // src/features/cart/cartApiSlice.js
 
-updateCart: builder.mutation({
-  query: ({ productId, quantity }) => ({
-    url: "/cart",
-    method: "PUT",
-    body: { productId, quantity },
-  }),
-  invalidatesTags: ["Cart"],
-}),
-
+    updateCart: builder.mutation({
+      query: ({ productId, quantity }) => ({
+        url: "/cart",
+        method: "PUT",
+        body: { productId, quantity },
+      }),
+      invalidatesTags: ["Cart"],
+    }),
   }),
 });
 
 export const {
   useGetCartQuery,
   // useAddToCartMutation,
-  useUpdateCartMutation, 
+  useUpdateCartMutation,
   useDeleteFromCartMutation,
 } = cartApiSlice;

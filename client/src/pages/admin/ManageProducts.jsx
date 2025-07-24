@@ -39,8 +39,7 @@ export default function ManageProducts() {
                 className="bg-white/10 border border-[#d5b56e] rounded-lg p-3 sm:p-4"
               >
                 <img
-                                src="https://images.unsplash.com/photo-1626379616459-b2ce1d9decbc?q=80&w=687&auto=format"
-
+                  src="https://images.unsplash.com/photo-1626379616459-b2ce1d9decbc?q=80&w=687&auto=format"
                   alt={product.title}
                   className="w-full h-36 sm:h-40 object-cover rounded mb-2"
                 />

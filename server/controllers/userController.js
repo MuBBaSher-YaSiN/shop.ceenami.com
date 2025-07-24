@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import logger from '../utils/logger.js';
+import logger from "../utils/logger.js";
 
 export const getAllUsers = async (req, res, next) => {
   try {
@@ -33,10 +33,14 @@ export const updateUser = async (req, res, next) => {
       updateData.password = await bcrypt.hash(password, salt);
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, {
-      new: true,
-      runValidators: true,
-    }).select("-password");
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      {
+        new: true,
+        runValidators: true,
+      },
+    ).select("-password");
 
     if (!updatedUser) return res.status(404).json({ error: "User not found" });
 

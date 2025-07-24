@@ -26,7 +26,7 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const { accessToken, user } = useSelector((state) => state.auth);
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [createOrder] = useCreateOrderMutation();
 
@@ -81,7 +81,7 @@ export default function CheckoutForm() {
             Authorization: `Bearer ${accessToken}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
       const clientSecret = res?.data?.data?.clientSecret;
@@ -113,13 +113,13 @@ export default function CheckoutForm() {
               },
             },
           },
-        }
+        },
       );
 
       if (error) {
         toast.error(error.message || "Payment failed.");
       } else if (paymentIntent?.status === "succeeded") {
-         //  Save order in DB
+        //  Save order in DB
         const orderPayload = {
           products: cart.products.map((item) => ({
             productId: item.productId._id,
@@ -133,8 +133,8 @@ export default function CheckoutForm() {
         };
 
         const result = await createOrder(orderPayload);
-        if(result?.error){
-          toast.error("Failed to save order.")
+        if (result?.error) {
+          toast.error("Failed to save order.");
           return;
         }
         //  Clear cart
@@ -144,23 +144,23 @@ export default function CheckoutForm() {
         });
 
         toast.success(" Payment successful!");
-          //  Redirect to success page
+        //  Redirect to success page
         navigate("/order-success");
-
       } else {
         toast.warning("⚠ Payment status: " + paymentIntent?.status);
       }
     } catch (err) {
-      toast.error(
-        err?.response?.data?.message || "Payment request failed."
-      );
+      toast.error(err?.response?.data?.message || "Payment request failed.");
     } finally {
       setProcessing(false);
     }
   };
 
   if (isLoading) return <Loader message="Preparing checkout..." />;
-  if (isError || !cart) return <p className="text-red-500 text-center mt-10"> Failed to fetch cart.</p>;
+  if (isError || !cart)
+    return (
+      <p className="text-red-500 text-center mt-10"> Failed to fetch cart.</p>
+    );
 
   return (
     <form

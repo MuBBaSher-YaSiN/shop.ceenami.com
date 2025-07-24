@@ -21,14 +21,17 @@ export const customBaseQuery = async (args, api, extraOptions) => {
   if (result?.error?.status === 401) {
     console.warn("🔐 First request failed with 401:", result);
 
-    const refreshResult = await baseQuery("/auth/refresh-token", api, extraOptions);
+    const refreshResult = await baseQuery(
+      "/auth/refresh-token",
+      api,
+      extraOptions,
+    );
     console.log("🔁 Refresh token result:", refreshResult);
 
     if (refreshResult?.data?.accessToken) {
       api.dispatch(setCredentials(refreshResult.data));
       toast.dismiss(); // close old toasts
-toast.info("🔐 Session refreshed");
-
+      toast.info("🔐 Session refreshed");
 
       // Retry original query
       result = await baseQuery(args, api, extraOptions);
@@ -46,5 +49,3 @@ toast.info("🔐 Session refreshed");
 
   return result;
 };
-
-

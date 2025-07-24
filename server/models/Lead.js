@@ -7,7 +7,7 @@ const leadSchema = new mongoose.Schema(
     email: { type: String, required: true },
     phone: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Lead", leadSchema);

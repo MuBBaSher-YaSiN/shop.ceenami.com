@@ -10,8 +10,8 @@ export default function Home() {
   const products = data?.data || [];
   // const products = [ ]
 
-
-  if (!authReady) return <p className="text-black text-center">Waiting for auth...</p>;
+  if (!authReady)
+    return <p className="text-black text-center">Waiting for auth...</p>;
 
   return (
     <div className="w-full min-h-[80vh]">
@@ -25,7 +25,9 @@ export default function Home() {
         <p className="text-red-400 text-center">Failed to load products</p>
       ) : products.length === 0 ? (
         <>
-          <p className="text-black text-center mb-4">We’ll be launching soon! Leave your details below:</p>
+          <p className="text-black text-center mb-4">
+            We’ll be launching soon! Leave your details below:
+          </p>
           <LeadForm />
         </>
       ) : (
@@ -37,7 +39,7 @@ export default function Home() {
                 product={product}
                 isLoggedIn={!!user}
               />
-            ) : null
+            ) : null,
           )}
         </div>
       )}

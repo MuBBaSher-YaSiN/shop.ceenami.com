@@ -25,7 +25,10 @@ export const refreshAccessToken = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ _id: decoded.userId, refreshTokens: refreshToken });
+    const user = await User.findOne({
+      _id: decoded.userId,
+      refreshTokens: refreshToken,
+    });
     if (!user) {
       return res.status(403).json({
         success: false,
@@ -46,9 +49,7 @@ export const refreshAccessToken = async (req, res, next) => {
         role: user.role,
       },
     });
-
   } catch (err) {
     next(err);
   }
 };
-

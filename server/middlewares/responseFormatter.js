@@ -1,5 +1,3 @@
-
-
 const responseFormatter = (req, res, next) => {
   const oldJson = res.json;
 
@@ -13,7 +11,7 @@ const responseFormatter = (req, res, next) => {
 
     return oldJson.call(this, {
       success: true,
-      message: data?.message || 'Request successful',
+      message: data?.message || "Request successful",
       data,
     });
   };

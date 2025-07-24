@@ -7,30 +7,28 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true
+      lowercase: true,
     },
     password: {
       type: String,
       required: true,
-      minlength: 6
+      minlength: 6,
     },
     profileImage: {
       type: String,
-      default: ''
+      default: "",
     },
     role: {
       type: String,
       enum: ["user", "admin"],
-      default: "user"
+      default: "user",
     },
-   refreshTokens: {
-  type: [String],
-  default: []
-}
-
-
+    refreshTokens: {
+      type: [String],
+      default: [],
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model("User", userSchema);

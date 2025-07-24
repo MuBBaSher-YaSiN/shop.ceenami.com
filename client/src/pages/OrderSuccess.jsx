@@ -7,12 +7,12 @@ export default function OrderSuccess() {
         🎉 Order Placed Successfully!
       </h1>
       <p className="text-lg">Thank you for your purchase.</p>
-     <Link
-  to="/"
-  className="inline-block bg-black text-white  k px-4 sm:px-6 py-2 mt-10 rounded text-sm sm:text-base font-semibold transition"
->
-  Start a New Order
-</Link>
+      <Link
+        to="/"
+        className="inline-block bg-black text-white  k px-4 sm:px-6 py-2 mt-10 rounded text-sm sm:text-base font-semibold transition"
+      >
+        Start a New Order
+      </Link>
 
       {/* <p className="mt-4 text-gray-400">You’ll receive an email confirmation shortly.</p> */}
     </div>

@@ -1,32 +1,34 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
-import connectDB from './config/db.js';
-import rateLimiter from './middlewares/rateLimiter.js'; // rate limiter middleware
-import logger from './utils/logger.js';
-import responseFormatter from './middlewares/responseFormatter.js'; // Optional
+import connectDB from "./config/db.js";
+import rateLimiter from "./middlewares/rateLimiter.js"; // rate limiter middleware
+import logger from "./utils/logger.js";
+import responseFormatter from "./middlewares/responseFormatter.js"; // Optional
 
 // Route imports
-import authRoutes from './routes/authRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import cartRoutes from './routes/cartRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import paymentRoutes from './routes/paymentRoutes.js';
-import orderRoutes from './routes/orderRoutes.js'
-import leadRoutes from './routes/leadRoutes.js'
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import leadRoutes from "./routes/leadRoutes.js";
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 //  Middleware Setup
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173', // replace with your frontend domain
-  credentials: true, // Allow cookies across origins
-}));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173", // replace with your frontend domain
+    credentials: true, // Allow cookies across origins
+  }),
+);
 
 app.use(rateLimiter); // Global rate limiting
 
@@ -36,14 +38,13 @@ app.use(helmet());
 app.use(responseFormatter); // Format all successful responses
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/leads', leadRoutes);
-
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/leads", leadRoutes);
 
 // 404 Route Handler
 app.use((req, res, next) => {
@@ -60,7 +61,7 @@ app.use((err, req, res, next) => {
   logger.error(err); // Log the full error
   res.status(statusCode).json({
     success: false,
-    error: err.message || "Internal Server Error"
+    error: err.message || "Internal Server Error",
   });
 });
 

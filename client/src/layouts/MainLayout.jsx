@@ -14,9 +14,15 @@ export default function MainLayout() {
         />
 
         <div className="space-x-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium">
-          <a href="/" className="hover:text-[#d5b56e] transition">Register</a>
-          <a href="/dashboard" className="hover:text-[#d5b56e] transition">Dashboard</a>
-          <a href="/login" className="hover:text-[#d5b56e] transition">Login</a>
+          <a href="/" className="hover:text-[#d5b56e] transition">
+            Register
+          </a>
+          <a href="/dashboard" className="hover:text-[#d5b56e] transition">
+            Dashboard
+          </a>
+          <a href="/login" className="hover:text-[#d5b56e] transition">
+            Login
+          </a>
         </div>
       </nav>
 

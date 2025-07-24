@@ -49,12 +49,20 @@ export default function AddProductModal({ onClose }) {
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex justify-center items-center px-4">
       <div className="bg-[#1a1a1a] border border-[#d5b56e] rounded-lg p-6 w-full max-w-md text-white relative">
-        <button onClick={onClose} className="absolute top-2 right-2 text-[#d5b56e] hover:text-red-400 text-xl">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-[#d5b56e] hover:text-red-400 text-xl"
+        >
           &times;
         </button>
-        <h2 className="text-lg font-bold mb-4 text-[#d5b56e]">Add New Product</h2>
+        <h2 className="text-lg font-bold mb-4 text-[#d5b56e]">
+          Add New Product
+        </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-3 text-sm sm:text-base">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-3 text-sm sm:text-base"
+        >
           <input
             type="text"
             name="title"

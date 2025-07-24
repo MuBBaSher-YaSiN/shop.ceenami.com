@@ -2,15 +2,15 @@
 
 /* 1. Import custom font */
 @font-face {
-  font-family: 'Arkhip';
-  src: url('/fonts/Arkhip.ttf') format('truetype');
+  font-family: "Arkhip";
+  src: url("/fonts/Arkhip.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 /* 2. Global font and colors */
 :root {
-  font-family: 'Arkhip', system-ui, sans-serif;
+  font-family: "Arkhip", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #ffffff;

@@ -29,9 +29,26 @@ export default function LeadForm() {
       onSubmit={handleSubmit}
       className="max-w-md mx-auto mt-10 space-y-4 text-white"
     >
-      <Input name="name" value={form.name} onChange={handleChange} placeholder="Name" />
-      <Input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email" />
-      <Input name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="Phone" />
+      <Input
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        placeholder="Name"
+      />
+      <Input
+        name="email"
+        type="email"
+        value={form.email}
+        onChange={handleChange}
+        placeholder="Email"
+      />
+      <Input
+        name="phone"
+        type="tel"
+        value={form.phone}
+        onChange={handleChange}
+        placeholder="Phone"
+      />
       <Button type="submit" disabled={isLoading}>
         {isLoading ? "Submitting..." : "Submit"}
       </Button>

@@ -7,10 +7,7 @@ import {
   deleteProduct,
 } from "../controllers/productController.js";
 
-import {
-  protect,
-  authorizeRoles,
-} from "../middlewares/authMiddleware.js";
+import { protect, authorizeRoles } from "../middlewares/authMiddleware.js";
 
 import { productValidationRules } from "../validators/productValidators.js";
 import validate from "../middlewares/validate.js";
@@ -28,7 +25,7 @@ router.post(
   authorizeRoles("admin"),
   productValidationRules,
   validate,
-  createProduct
+  createProduct,
 );
 
 router.put(
@@ -37,14 +34,9 @@ router.put(
   authorizeRoles("admin"),
   productValidationRules,
   validate,
-  updateProduct
+  updateProduct,
 );
 
-router.delete(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  deleteProduct
-);
+router.delete("/:id", protect, authorizeRoles("admin"), deleteProduct);
 
 export default router;

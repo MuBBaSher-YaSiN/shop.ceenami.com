@@ -8,7 +8,10 @@ export const updateUserValidator = [
   param("id").isMongoId().withMessage("Invalid user ID"),
   body("name").optional().isString().withMessage("Name must be a string"),
   body("email").optional().isEmail().withMessage("Invalid email format"),
-  body("password").optional().isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+  body("password")
+    .optional()
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters"),
 ];
 
 export const deleteUserValidator = [

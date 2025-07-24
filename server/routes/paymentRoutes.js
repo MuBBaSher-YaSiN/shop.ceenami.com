@@ -17,7 +17,7 @@ router.post(
   authorizeRoles("user"),
   validateCreatePaymentIntent,
   validate,
-  createPaymentIntent
+  createPaymentIntent,
 );
 
 router.get("/:id", protect, authorizeRoles("user"), getPaymentDetails);

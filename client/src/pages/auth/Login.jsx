@@ -36,31 +36,29 @@ export default function Login() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await login(formData).unwrap();
-    const { user, accessToken } = res;
-    const role = user.role;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await login(formData).unwrap();
+      const { user, accessToken } = res;
+      const role = user.role;
 
-    dispatch(setCredentials({ user, accessToken, role }));
-    toast.success(" Login successful!");
+      dispatch(setCredentials({ user, accessToken, role }));
+      toast.success(" Login successful!");
 
-    // 🔁 Redirection logic
-    const from = location.state?.from || "/";
-    if (role === "admin") {
-      navigate("/dashboard");
-    } else if (role === "user") {
-      navigate(from); // go back to original route (e.g. /products/:id)
-    } else {
-      navigate("/unauthorized");
+      // 🔁 Redirection logic
+      const from = location.state?.from || "/";
+      if (role === "admin") {
+        navigate("/dashboard");
+      } else if (role === "user") {
+        navigate(from); // go back to original route (e.g. /products/:id)
+      } else {
+        navigate("/unauthorized");
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || " Login failed");
     }
-  } catch (err) {
-    toast.error(err?.data?.message || " Login failed");
-  }
-};
-
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center  px-4 sm:px-6 lg:px-12  font-arkhip">

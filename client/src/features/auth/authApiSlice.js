@@ -7,7 +7,6 @@ export const authApi = createApi({
   baseQuery: customBaseQuery, //  use custom base query with auto-refresh
   tagTypes: ["Auth", "Users"],
   endpoints: (builder) => ({
-
     login: builder.mutation({
       query: (data) => ({
         url: "/auth/login",
@@ -34,38 +33,33 @@ export const authApi = createApi({
       invalidatesTags: ["Auth"],
     }),
     refreshToken: builder.query({
-  query: () => ({
-    url: "/auth/refresh-token",
-    method: "POST",
-    credentials: "include",
-  }),
-}),
-deleteUser: builder.mutation({
-  query: (id) => ({
-    url: `/users/${id}`,
-    method: "DELETE",
-  }),
-  invalidatesTags: ["Users"],
-}),
+      query: () => ({
+        url: "/auth/refresh-token",
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Users"],
+    }),
 
-updateUser: builder.mutation({
-  query: ({ id, data }) => ({
-    url: `/users/${id}`,
-    method: "PUT",
-    body: data,
-  }),
-  invalidatesTags: ["Users"],
-}),
-
-
- 
-
+    updateUser: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/users/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
 
     getAllUsers: builder.query({
       query: () => "/users",
       providesTags: ["Users"],
     }),
-
   }),
 });
 

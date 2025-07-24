@@ -17,7 +17,10 @@ export default function AdminOrders() {
       ) : (
         <div className="space-y-4">
           {orders.map((order) => (
-            <div key={order._id} className="border border-[#d5b56e] rounded p-4">
+            <div
+              key={order._id}
+              className="border border-[#d5b56e] rounded p-4"
+            >
               <p className="text-[#d5b56e] font-semibold">
                 👤 {order.user?.name} ({order.user?.email})
               </p>

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
-import logger from '../utils/logger.js';
+import logger from "../utils/logger.js";
 dotenv.config();
 
 const createAdmin = async () => {
@@ -21,7 +21,7 @@ const createAdmin = async () => {
       name: "Super Admin",
       email: "superadmin@example.com",
       password: hashedPassword,
-      role: "admin"
+      role: "admin",
     });
 
     await admin.save();

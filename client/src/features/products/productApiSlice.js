@@ -13,11 +13,11 @@ export const productApi = apiSlice.injectEndpoints({
     }),
     createProduct: builder.mutation({
       query: (newProduct) => ({
-       url: "/products",
-       method: "POST",
-      body: newProduct,
+        url: "/products",
+        method: "POST",
+        body: newProduct,
       }),
-     invalidatesTags: ["Product"]
+      invalidatesTags: ["Product"],
     }),
   }),
 });
@@ -25,5 +25,5 @@ export const productApi = apiSlice.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,
-  useCreateProductMutation
+  useCreateProductMutation,
 } = productApi;

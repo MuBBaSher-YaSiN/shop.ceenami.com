@@ -21,10 +21,9 @@ export default function ProductCard({ product, isLoggedIn }) {
   };
 
   return (
-    
     <div className="bg-white/10 backdrop-blur-md text-black border border-[#d5b56e] hover:shadow-[#d5b56e] rounded-xl hover:shadow-lg shadow-lg p-4 space-y-3 w-full sm:w-72">
       <Link to={`/products/${product._id}`}>
-        {/* 👇 Dual-image hover effect */}
+        {/*  Dual-image hover effect */}
         <div className="relative w-full h-48 sm:h-52 rounded-md overflow-hidden border border-[#d5b56e] group">
           <img
             src={product.images[0]}
@@ -39,7 +38,9 @@ export default function ProductCard({ product, isLoggedIn }) {
         </div>
 
         <h3 className="text-lg font-semibold mt-2">{product.title}</h3>
-        <p className="text-sm text-gray-600 line-clamp-2">{product.description}</p>
+        <p className="text-sm text-gray-600 line-clamp-2">
+          {product.description}
+        </p>
         <p className="text-gray-700 font-bold">${product.price}</p>
       </Link>
 
@@ -59,6 +60,5 @@ export default function ProductCard({ product, isLoggedIn }) {
           : "Login to Add"}
       </button>
     </div>
-    
   );
 }

@@ -17,7 +17,9 @@ export const protect = (req, res, next) => {
 export const authorizeRoles = (...allowedRoles) => {
   return (req, res, next) => {
     if (!allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ error: "Access denied: insufficient role" });
+      return res
+        .status(403)
+        .json({ error: "Access denied: insufficient role" });
     }
     next();
   };
@@ -30,5 +32,7 @@ export const canEditUser = (req, res, next) => {
     return next();
   }
 
-  return res.status(403).json({ error: "You can only modify your own account" });
+  return res
+    .status(403)
+    .json({ error: "You can only modify your own account" });
 };

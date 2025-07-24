@@ -23,12 +23,14 @@ export const registerUser = async (req, res, next) => {
       email,
       password: hashedPassword,
       profileImage,
-      role: role || 'user'
+      role: role || "user",
     });
 
     await user.save();
 
-    res.status(201).json({ success: true, message: "User registered successfully" });
+    res
+      .status(201)
+      .json({ success: true, message: "User registered successfully" });
   } catch (err) {
     err.statusCode = 500;
     err.message = err.message || "Registration failed";
@@ -98,7 +100,7 @@ export const logoutUser = async (req, res, next) => {
     if (refreshToken) {
       await User.findOneAndUpdate(
         { refreshTokens: refreshToken },
-        { $pull: { refreshTokens: refreshToken } }
+        { $pull: { refreshTokens: refreshToken } },
       );
       res.clearCookie("refreshToken");
     }
