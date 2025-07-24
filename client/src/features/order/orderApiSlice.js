@@ -11,7 +11,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Order", "Cart"],
     }),
     getAllOrders: builder.query({
-      query: () => "/orders",
+      query: () => "/orders/admin",
       providesTags: ["Order"],
     }),
   }),

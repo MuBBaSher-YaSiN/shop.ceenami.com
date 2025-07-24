@@ -10,7 +10,10 @@ export const leadApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    getLeads: builder.query({
+      query: () => "/leads",
+      providesTags: ["Leads"],
+    }),
   }),
 });
-
-export const { useSubmitLeadMutation } = leadApiSlice;
+export const { useSubmitLeadMutation, useGetLeadsQuery } = leadApiSlice;

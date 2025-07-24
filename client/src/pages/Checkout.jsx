@@ -7,7 +7,7 @@ export default function Checkout() {
   
   return (
     <div className="py-12 px-4">
-      <h2 className="text-3xl font-bold text-[#d5b56e] text-center">Checkout</h2>
+      <h2 className="text-3xl font-bold text-black text-center">Checkout</h2>
       <CheckoutForm  />
     </div>
   );

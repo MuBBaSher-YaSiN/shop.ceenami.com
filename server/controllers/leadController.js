@@ -9,3 +9,11 @@ export const createLead = async (req, res, next) => {
     next(error);
   }
 };
+export const getLeads = async (req, res, next) => {
+  try {
+    const leads = await Lead.find().sort({ createdAt: -1 });
+    res.status(200).json({ success: true, data: leads });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -200,11 +200,11 @@ export default function CheckoutForm() {
         <CardElement options={CARD_OPTIONS} />
       </div>
 
-      <div className="text-right text-lg font-semibold text-[#d5b56e]">
+      <div className="text-right text-xs md:text-base  text-black">
         You will be charged: Rs {totalAmount}
       </div>
 
-      <Button type="submit" disabled={!stripe || processing}>
+      <Button className="" type="submit" disabled={!stripe || processing}>
         {processing ? "Processing..." : "Pay Now"}
       </Button>
     </form>

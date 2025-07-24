@@ -19,6 +19,8 @@ import Cart from "./pages/Cart";
 import ManageProducts from "./pages/admin/ManageProducts";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess"
+import ManageOrders from "./pages/admin/ManageOrders";
+import ManageLeads from "./pages/admin/ManageLeads";
 export default function App() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
@@ -63,7 +65,12 @@ export default function App() {
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
   <Route path="/checkout" element={<Checkout />} />
 </Route>
-
+  <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+  <Route path="/admin/orders" element={<ManageOrders />} />
+</Route>
+  <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+  <Route path="/admin/leads" element={<ManageLeads />} />
+</Route>
          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
           <Route path="/cart" element={<Cart />} />
         </Route>

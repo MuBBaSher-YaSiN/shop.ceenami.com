@@ -28,9 +28,9 @@ export default function Navbar() {
       <img
         src={logo}
         alt="Ceenami Logo"
-        className="w-24 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-20 object-contain"
+        className="w-12 mr-4 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-20 object-contain"
       />
-      <div className="space-x-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium">
+      <div className="space-x-4 text-[9px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-medium">
         <Link
               to="/"
               className="text-[#091636] hover:text-[#d5b56e] transition"
@@ -66,7 +66,7 @@ export default function Navbar() {
             </Link>
             <button
               onClick={handleLogout}
-              className="text-[#091636] hover:text-red-500 transition"
+              className="text-[#091636] mt-4 hover:text-red-500 transition"
             >
               Logout
             </button>
