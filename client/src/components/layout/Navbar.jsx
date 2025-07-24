@@ -31,6 +31,12 @@ export default function Navbar() {
         className="w-24 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-20 object-contain"
       />
       <div className="space-x-4 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium">
+        <Link
+              to="/"
+              className="text-[#091636] hover:text-[#d5b56e] transition"
+            >
+              Home
+            </Link>
         {!user ? (
           <>
             <Link
@@ -48,9 +54,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-          <Link to="/" className="text-[#d5b56e] hover:underline">
- Home
-</Link>
+        
 <Link to="/cart" className="text-[#d5b56e] hover:underline">
   View Cart
 </Link>

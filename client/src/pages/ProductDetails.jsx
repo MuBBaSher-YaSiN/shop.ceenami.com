@@ -20,7 +20,7 @@ const handleAdd = async () => {
       quantity: 1,
     }).unwrap();
     toast.success("✅ Added to cart!");
-    console.log('cart added😁😁😀',cartAddedData )
+    console.log('cart added ',cartAddedData )
   } catch (err) {
     toast.error(err?.data?.message || "❌ Failed to add to cart");
   }

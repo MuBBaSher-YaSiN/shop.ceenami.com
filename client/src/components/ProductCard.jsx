@@ -19,7 +19,7 @@ export default function ProductCard({ product, isLoggedIn }) {
         quantity: 1,
       }).unwrap();
       toast.success("✅ Added to cart!");
-      console.log('cart added😁😁haha')
+      console.log('cart added')
     } catch (err) {
       toast.error(err?.data?.message || "❌ Failed to add to cart");
     }

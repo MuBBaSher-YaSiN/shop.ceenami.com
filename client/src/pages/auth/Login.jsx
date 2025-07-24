@@ -93,7 +93,7 @@ const handleSubmit = async (e) => {
         <p className="text-center text-sm text-gray-500">
           Don’t have an account?{" "}
           <a
-            href="/"
+            href="/register"
             className="text-[#d5b56e] hover:underline transition duration-200"
           >
             Register here
