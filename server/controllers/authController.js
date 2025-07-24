@@ -58,11 +58,11 @@ export const loginUser = async (req, res, next) => {
     const payload = { userId: user._id, role: user.role };
     const { accessToken, refreshToken } = generateTokens(payload);
 
-    // ✅ Push refresh token into the array
+    //  Push refresh token into the array
     user.refreshTokens.push(refreshToken);
     await user.save();
 
-    // ✅ Send refresh token in httpOnly cookie
+    //  Send refresh token in httpOnly cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -70,7 +70,7 @@ export const loginUser = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    // ✅ Send access token and user info
+    //  Send access token and user info
     res.status(200).json({
       success: true,
       message: "Login successful",

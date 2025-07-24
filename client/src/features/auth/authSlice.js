@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  accessToken: null, // ✅ store accessToken directly
+  accessToken: null, //  store accessToken directly
   role: null,
   authReady: false,
 };
@@ -17,7 +17,7 @@ const authSlice = createSlice({
       const { user, accessToken, role } = action.payload;
       state.user = user;
       state.accessToken = accessToken; 
-      state.role = role || user?.role || null; // ✅ fallback
+      state.role = role || user?.role || null; //  fallback
       state.authReady = true; 
     },
     logout: (state) => {

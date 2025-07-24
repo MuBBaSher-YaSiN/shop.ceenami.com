@@ -22,7 +22,7 @@ export default function Login() {
     if (!authReady) return;
 
     if (user && !location.state?.fromLogin && !hasShownToast.current) {
-      toast.info("✅ You are already logged in.");
+      toast.info(" You are already logged in.");
       hasShownToast.current = true;
       navigate("/", { replace: true });
     }
@@ -44,7 +44,7 @@ const handleSubmit = async (e) => {
     const role = user.role;
 
     dispatch(setCredentials({ user, accessToken, role }));
-    toast.success("✅ Login successful!");
+    toast.success(" Login successful!");
 
     // 🔁 Redirection logic
     const from = location.state?.from || "/";
@@ -56,7 +56,7 @@ const handleSubmit = async (e) => {
       navigate("/unauthorized");
     }
   } catch (err) {
-    toast.error(err?.data?.message || "❌ Login failed");
+    toast.error(err?.data?.message || " Login failed");
   }
 };
 

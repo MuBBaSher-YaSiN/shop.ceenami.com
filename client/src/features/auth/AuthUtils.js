@@ -2,7 +2,7 @@
 
 import { authApi } from "./authApiSlice";
 
-// ✅ Accepts `dispatch` directly now — NOT store
+//  Accepts `dispatch` directly now — NOT store
 import { setCredentials, logout, markAuthReady } from "./authSlice";
 
 export const loadUserFromRefreshToken = async (dispatch) => {
@@ -19,7 +19,7 @@ const role = user.role;
   } catch (error) {
     dispatch(logout());
   } finally {
-    dispatch(markAuthReady()); // ✅ Always mark done
+    dispatch(markAuthReady()); //  Always mark done
   }
 };
 

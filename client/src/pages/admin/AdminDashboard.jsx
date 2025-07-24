@@ -21,7 +21,7 @@ export default function AdminDashboard() {
       await deleteUser(userId).unwrap();
       toast.success("User deleted successfully");
     } catch (err) {
-      console.error("❌ Failed to delete user", err);
+      console.error(" Failed to delete user", err);
       toast.error("Failed to delete user");
     }
   };

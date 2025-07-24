@@ -119,7 +119,7 @@ export default function CheckoutForm() {
       if (error) {
         toast.error(error.message || "Payment failed.");
       } else if (paymentIntent?.status === "succeeded") {
-         // ✅ Save order in DB
+         //  Save order in DB
         const orderPayload = {
           products: cart.products.map((item) => ({
             productId: item.productId._id,
@@ -137,14 +137,14 @@ export default function CheckoutForm() {
           toast.error("Failed to save order.")
           return;
         }
-        // ✅ Clear cart
+        //  Clear cart
         await axios.delete("/api/cart", {
           headers: { Authorization: `Bearer ${accessToken}` },
           withCredentials: true,
         });
 
-        toast.success("✅ Payment successful!");
-          // ✅ Redirect to success page
+        toast.success(" Payment successful!");
+          //  Redirect to success page
         navigate("/order-success");
 
       } else {
@@ -160,7 +160,7 @@ export default function CheckoutForm() {
   };
 
   if (isLoading) return <Loader message="Preparing checkout..." />;
-  if (isError || !cart) return <p className="text-red-500 text-center mt-10">❌ Failed to fetch cart.</p>;
+  if (isError || !cart) return <p className="text-red-500 text-center mt-10"> Failed to fetch cart.</p>;
 
   return (
     <form

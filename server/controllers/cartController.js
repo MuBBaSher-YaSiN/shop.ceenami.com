@@ -2,8 +2,7 @@ import Cart from "../models/Cart.js";
 import User from "../models/User.js";
 import logger from '../utils/logger.js';
 
-// controllers/cartController.js
-
+// CREATE CART
 export const createCart = async (req, res, next) => {
   try {
     const { products, totalAmount } = req.body;
@@ -29,9 +28,7 @@ export const createCart = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Cart saved successfully",
-      data: {
-        cart,
-      },
+      data: { cart },
     });
   } catch (error) {
     logger.error("Error creating cart:", error);
@@ -39,6 +36,7 @@ export const createCart = async (req, res, next) => {
   }
 };
 
+// GET USER CART
 export const getUserCart = async (req, res, next) => {
   try {
     const userId = req.user.userId;
@@ -46,12 +44,13 @@ export const getUserCart = async (req, res, next) => {
 
     if (!cart) return res.status(404).json({ success: false, message: "Cart not found" });
 
+    // 🧹 Remove products whose references no longer exist
+    cart.products = cart.products.filter(p => p.productId !== null);
+
     res.json({
       success: true,
       message: "Cart retrieved successfully",
-      data: {
-        cart,
-      },
+      data: { cart },
     });
   } catch (error) {
     logger.error("Error retrieving cart:", error);
@@ -59,9 +58,7 @@ export const getUserCart = async (req, res, next) => {
   }
 };
 
-
-// controllers/cartController.js
-
+// UPDATE CART
 export const updateCart = async (req, res, next) => {
   const { productId, quantity } = req.body;
   const userId = req.user.userId;
@@ -70,14 +67,14 @@ export const updateCart = async (req, res, next) => {
     let cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
-  const user = await User.findById(userId);
-  cart = new Cart({
-    user: userId,
-    email: user.email,
-    products: [{ productId, quantity }],
-    totalAmount: 0,
-  });
-}
+      const user = await User.findById(userId);
+      cart = new Cart({
+        user: userId,
+        email: user.email,
+        products: [{ productId, quantity }],
+        totalAmount: 0,
+      });
+    }
 
     const existingItem = cart.products.find(
       (p) => p.productId.toString() === productId
@@ -89,8 +86,11 @@ export const updateCart = async (req, res, next) => {
       cart.products.push({ productId, quantity });
     }
 
-    // Recalculate total
+    // 🧹 Populate and clean deleted product references
     await cart.populate("products.productId");
+    cart.products = cart.products.filter(p => p.productId !== null); //  filter orphaned products
+
+    // 🔄 Recalculate total
     cart.totalAmount = cart.products.reduce(
       (acc, item) => acc + item.quantity * item.productId.price,
       0
@@ -101,9 +101,7 @@ export const updateCart = async (req, res, next) => {
     res.json({
       success: true,
       message: "Cart updated successfully",
-      data: {
-        cart,
-      },
+      data: { cart },
     });
   } catch (err) {
     logger.error("Cart update error:", err);
@@ -111,7 +109,7 @@ export const updateCart = async (req, res, next) => {
   }
 };
 
-
+// REMOVE ITEM FROM CART
 export const removeCartItem = async (req, res, next) => {
   const userId = req.user.userId;
   const { productId } = req.params;
@@ -134,6 +132,7 @@ export const removeCartItem = async (req, res, next) => {
   }
 };
 
+// DELETE CART
 export const deleteCart = async (req, res, next) => {
   const userId = req.user.userId;
 

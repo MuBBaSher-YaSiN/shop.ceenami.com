@@ -11,12 +11,19 @@ export const productApi = apiSlice.injectEndpoints({
       query: (id) => `/products/${id}`,
       providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
-    // Add more endpoints like createProduct, deleteProduct, etc.
+    createProduct: builder.mutation({
+      query: (newProduct) => ({
+       url: "/products",
+       method: "POST",
+      body: newProduct,
+      }),
+     invalidatesTags: ["Product"]
+    }),
   }),
 });
 
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,
-  // other hooks...
+  useCreateProductMutation
 } = productApi;

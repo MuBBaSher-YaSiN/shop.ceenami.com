@@ -1,10 +1,10 @@
 // src/features/auth/authApiSlice.js
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { customBaseQuery } from "../../app/customFetchBase"; // ✅ updated path
+import { customBaseQuery } from "../../app/customFetchBase"; //  updated path
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: customBaseQuery, // ✅ use custom base query with auto-refresh
+  baseQuery: customBaseQuery, //  use custom base query with auto-refresh
   tagTypes: ["Auth", "Users"],
   endpoints: (builder) => ({
 

@@ -8,11 +8,11 @@ import {
 
 const router = express.Router();
 
-// ✅ User routes
+//  User routes
 router.post("/", protect, authorizeRoles("user"), createOrder);
 router.get("/", protect, authorizeRoles("user"), getUserOrders);
 
-// ✅ Admin route to get all orders
+//  Admin route to get all orders
 router.get("/admin", protect, authorizeRoles("admin"), getAllOrders);
 
 export default router;

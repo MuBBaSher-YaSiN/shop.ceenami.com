@@ -5,7 +5,7 @@ export default function AdminOrders() {
   const { data, isLoading, isError } = useGetAllOrdersQuery();
 
   if (isLoading) return <Loader message="Loading orders..." />;
-  if (isError) return <p className="text-red-500">❌ Failed to load orders.</p>;
+  if (isError) return <p className="text-red-500"> Failed to load orders.</p>;
 
   const orders = data?.data || [];
 

@@ -33,7 +33,7 @@ export const refreshAccessToken = async (req, res, next) => {
       });
     }
 
-    // ✅ All good – issue new access token
+    //  All good – issue new access token
     const payload = { userId: user._id, role: user.role };
     const { accessToken } = generateTokens(payload);
 

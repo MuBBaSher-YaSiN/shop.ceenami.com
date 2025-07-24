@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loadUserFromRefreshToken } from "./features/auth/AuthUtils"; // ✅ Import the fixed helper
+import { loadUserFromRefreshToken } from "./features/auth/AuthUtils"; //  Import the fixed helper
 import Cart from "./pages/Cart";
 import ManageProducts from "./pages/admin/ManageProducts";
 import Checkout from "./pages/Checkout";
@@ -31,20 +31,20 @@ export default function App() {
       console.log("🔄 Checking auth...");
       try {
         await loadUserFromRefreshToken(dispatch);
-        console.log("✅ User loaded via refresh token");
+        console.log(" User loaded via refresh token");
       } catch (error) {
-        console.error("❌ Refresh token failed", error);
+        console.error(" Refresh token failed", error);
         const hasToken = document.cookie.includes("refreshToken");
         if (hasToken) toast.error("Session expired. Please login again.");
       } finally {
-        console.log("✅ Auth check completed");
+        console.log(" Auth check completed");
         setChecked(true);
       }
     };
     run();
   }, [dispatch]);
 
-  // ⛔ Don't render anything until fully checked
+  //  Don't render anything until fully checked
   if (!checked || !authReady) return <Loader message="Initializing..." />;
 
   return (
@@ -52,7 +52,7 @@ export default function App() {
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar />
 
-      {/* ✅ Only render Routes AFTER auth is ready */}
+      {/*  Only render Routes AFTER auth is ready */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -61,7 +61,7 @@ export default function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<NotFound />} />
 <Route path="/order-success" element={<OrderSuccess />} />
-        {/* ✅ Protected Routes */}
+        {/*  Protected Routes */}
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
   <Route path="/checkout" element={<Checkout />} />
 </Route>

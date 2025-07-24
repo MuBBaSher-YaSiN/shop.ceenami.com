@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useGetProductsQuery } from "../features/products/productApiSlice";
 import ProductCard from "../components/ProductCard";
-import LeadForm from "../components/forms/LeadForm"; // ✅ added
+import LeadForm from "../components/forms/LeadForm"; //  added
 
 export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);

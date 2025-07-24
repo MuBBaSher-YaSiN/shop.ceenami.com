@@ -14,7 +14,7 @@ export default function Cart() {
   if (isError) {
     return (
       <p className="text-red-400 text-center mt-10 text-sm sm:text-base">
-        ❌ Failed to load cart.
+         Failed to load cart.
       </p>
     );
   }
@@ -22,7 +22,7 @@ export default function Cart() {
   if (!data || !data.success || !data.data?.cart) {
     return (
       <p className="text-red-400 text-center mt-10 text-sm sm:text-base">
-        ❌ Unexpected cart data.
+         Unexpected cart data.
       </p>
     );
   }

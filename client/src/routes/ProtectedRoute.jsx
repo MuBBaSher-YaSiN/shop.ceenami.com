@@ -7,7 +7,7 @@ export default function ProtectedRoute({ allowedRoles = [] }) {
   const { user, role, authReady } = useSelector((state) => state.auth);
   const location = useLocation();
 
-  if (!authReady) return <Loader />; // ✅ Wait until auth is ready
+  if (!authReady) return <Loader />; //  Wait until auth is ready
 
   if (!user) {
     return (
