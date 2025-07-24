@@ -67,5 +67,5 @@ app.use((err, req, res, next) => {
 
 //  Connect DB and Start Server
 connectDB().then(() => {
-  app.listen(PORT, () => logger.info(`🚀 Server running on port ${PORT}`));
+  app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 });

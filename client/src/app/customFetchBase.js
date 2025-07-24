@@ -19,7 +19,7 @@ export const customBaseQuery = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    console.warn("🔐 First request failed with 401:", result);
+    console.warn(" First request failed with 401:", result);
 
     const refreshResult = await baseQuery(
       "/auth/refresh-token",
@@ -31,7 +31,7 @@ export const customBaseQuery = async (args, api, extraOptions) => {
     if (refreshResult?.data?.accessToken) {
       api.dispatch(setCredentials(refreshResult.data));
       toast.dismiss(); // close old toasts
-      toast.info("🔐 Session refreshed");
+      toast.info(" Session refreshed");
 
       // Retry original query
       result = await baseQuery(args, api, extraOptions);
