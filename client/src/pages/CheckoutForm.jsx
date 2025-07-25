@@ -1,3 +1,4 @@
+// src/pages/CheckoutForm.js
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import Button from "../components/ui/Button";
@@ -16,9 +17,15 @@ const CARD_OPTIONS = {
     base: {
       fontSize: "16px",
       color: "#fff",
-      "::placeholder": { color: "#ccc" },
+      "::placeholder": { 
+        color: "#aaa",
+      },
+      iconColor: "#d5b56e",
     },
-    invalid: { color: "#fa755a" },
+    invalid: { 
+      color: "#fa755a",
+      iconColor: "#fa755a" 
+    },
   },
 };
 
@@ -63,7 +70,6 @@ export default function CheckoutForm() {
     setProcessing(true);
 
     try {
-      // Convert Rs to USD cents (example: 7495 Rs → ~2676 cents if 1 USD = 280 PKR)
       const amountInCents = Math.round((totalAmount / 280) * 100);
 
       const res = await axios.post(
@@ -119,7 +125,6 @@ export default function CheckoutForm() {
       if (error) {
         toast.error(error.message || "Payment failed.");
       } else if (paymentIntent?.status === "succeeded") {
-        //  Save order in DB
         const orderPayload = {
           products: cart.products.map((item) => ({
             productId: item.productId._id,
@@ -137,14 +142,13 @@ export default function CheckoutForm() {
           toast.error("Failed to save order.");
           return;
         }
-        //  Clear cart
+        
         await axios.delete("/api/cart", {
           headers: { Authorization: `Bearer ${accessToken}` },
           withCredentials: true,
         });
 
-        toast.success(" Payment successful!");
-        //  Redirect to success page
+        toast.success("Payment successful!");
         navigate("/order-success");
       } else {
         toast.warning("⚠ Payment status: " + paymentIntent?.status);
@@ -159,54 +163,78 @@ export default function CheckoutForm() {
   if (isLoading) return <Loader message="Preparing checkout..." />;
   if (isError || !cart)
     return (
-      <p className="text-red-500 text-center mt-10"> Failed to fetch cart.</p>
+      <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
+        <p className="text-red-300">Failed to fetch cart</p>
+      </div>
     );
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-6 text-white max-w-xl mx-auto mt-10"
-    >
-      <Input
-        type="text"
-        name="name"
-        value={billing.name}
-        onChange={handleChange}
-        placeholder="Full Name"
-      />
-      <Input
-        type="email"
-        name="email"
-        value={billing.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <Input
-        type="tel"
-        name="phone"
-        value={billing.phone}
-        onChange={handleChange}
-        placeholder="Phone"
-      />
-      <Input
-        type="text"
-        name="address"
-        value={billing.address}
-        onChange={handleChange}
-        placeholder="Address"
-      />
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Input
+          type="text"
+          name="name"
+          value={billing.name}
+          onChange={handleChange}
+          placeholder="Full Name"
+          className="bg-black/50 border-gray-700 focus:border-[#d5b56e] text-black"
+          required
+        />
+        <Input
+          type="email"
+          name="email"
+          value={billing.email}
+          onChange={handleChange}
+          placeholder="Email"
+          className="bg-black/50 border-gray-700 focus:border-[#d5b56e] text-black"
+          required
+        />
+        <Input
+          type="tel"
+          name="phone"
+          value={billing.phone}
+          onChange={handleChange}
+          placeholder="Phone"
+          className="bg-black/50 border-gray-700 focus:border-[#d5b56e] text-black"
+          required
+        />
+        <Input
+          type="text"
+          name="address"
+          value={billing.address}
+          onChange={handleChange}
+          placeholder="Full Address"
+          className="bg-black/50 border-gray-700 focus:border-[#d5b56e] text-black md:col-span-2"
+          required
+        />
+      </div>
 
-      <div className="p-4 bg-[#1e1e1e] rounded">
+      <div className="p-5 bg-black/50 border border-[#d5b56e]/30 rounded-lg">
         <CardElement options={CARD_OPTIONS} />
       </div>
 
-      <div className="text-right text-xs md:text-base  text-black">
-        You will be charged: Rs {totalAmount}
+      <div className="flex justify-between items-center pt-4 border-t border-[#d5b56e]/30">
+        <div className="text-sm sm:text-lg  text-[#d5b56e]">
+          Total: Rs {totalAmount.toFixed(2)}
+        </div>
+        <Button
+          type="submit"
+          disabled={!stripe || processing}
+          className={`px-8 py-3 font-bold ${
+            processing ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#d5b56e] hover:bg-[#c19a3d] text-black'
+          }`}
+        >
+          {processing ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </span>
+          ) : 'Pay Now'}
+        </Button>
       </div>
-
-      <Button className="" type="submit" disabled={!stripe || processing}>
-        {processing ? "Processing..." : "Pay Now"}
-      </Button>
     </form>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
@@ -40,36 +40,81 @@ export default function Register() {
   };
 
   return (
-    <div className="flex justify-center items-start min-h-[80vh] w-full">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md mt-6 p-6 bg-white/10 backdrop-blur-md text-white border border-[#d5b56e] rounded-xl shadow-2xl space-y-4"
-      >
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#d5b56e] text-center mb-4">
-          Create New User
-        </h2>
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#d5b56e]/10 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#d5b56e]/10 rounded-full filter blur-3xl"></div>
+      </div>
 
-        {["name", "email", "password"].map((field) => (
-          <Input
-            key={field}
-            type={field === "password" ? "password" : field}
-            name={field}
-            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-            value={formData[field]}
-            onChange={handleChange}
-          />
-        ))}
+      {/* Registration Card */}
+      <div className="relative z-10 w-full max-w-md">
+        <div className="bg-black/80 backdrop-blur-md border border-[#d5b56e]/30 rounded-xl shadow-lg overflow-hidden">
+          {/* Gold accent bar */}
+          <div className="h-2 bg-gradient-to-r from-[#d5b56e] via-yellow-600 to-[#d5b56e]"></div>
+          
+          <div className="px-8 py-10">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-[#d5b56e] mb-2">Create Account</h2>
+              <p className="text-white/80">Join our exclusive community</p>
+            </div>
 
-        <Button disabled={isLoading}>
-          {isLoading ? "Submitting..." : "Submit"}
-        </Button>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-4">
+                {["name", "email", "password"].map((field) => (
+                  <Input
+                    key={field}
+                    type={field === "password" ? "password" : field}
+                    name={field}
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="bg-black/50 border-gray-700 focus:border-[#d5b56e] text-black"
+                  />
+                ))}
+              </div>
 
-        {isError && (
-          <p className="text-red-400 text-sm text-center mt-2">
-            {error?.data?.message || "Something went wrong"}
-          </p>
-        )}
-      </form>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 font-bold ${
+                  isLoading 
+                    ? 'bg-gray-600 cursor-not-allowed' 
+                    : 'bg-[#d5b56e] hover:bg-[#c19a3d] text-black'
+                }`}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Creating Account...
+                  </span>
+                ) : 'Register'}
+              </Button>
+
+              {isError && (
+                <p className="text-red-400 text-sm text-center">
+                  {error?.data?.message || "Registration failed. Please try again."}
+                </p>
+              )}
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-white/70">
+                Already have an account?{' '}
+                <Link
+                  to="/login"
+                  className="text-[#d5b56e] hover:underline font-medium"
+                >
+                  Login here
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

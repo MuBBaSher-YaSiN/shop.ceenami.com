@@ -1,7 +1,9 @@
+// src/pages/Cart.jsx
 import { useSelector } from "react-redux";
 import { useGetCartQuery } from "../features/cart/cartApiSlice";
 import Loader from "../components/ui/Loader";
 import { Link } from "react-router-dom";
+import CartItem from "../components/CartItem";
 
 export default function Cart() {
   const { authReady } = useSelector((state) => state.auth);
@@ -13,71 +15,89 @@ export default function Cart() {
 
   if (isError) {
     return (
-      <p className="text-red-400 text-center mt-10 text-sm sm:text-base">
-        Failed to load cart.
-      </p>
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <p className="text-red-400 text-center text-lg">
+          Failed to load cart. Please try again.
+        </p>
+      </div>
     );
   }
 
   if (!data || !data.success || !data.data?.cart) {
     return (
-      <p className="text-red-400 text-center mt-10 text-sm sm:text-base">
-        Unexpected cart data.
-      </p>
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <p className="text-red-400 text-center text-lg">
+          Unexpected cart data format.
+        </p>
+      </div>
     );
   }
 
   const cart = data.data.cart;
   if (!cart.products || cart.products.length === 0) {
     return (
-      <p className="text-center text-black mt-10 text-sm sm:text-base">
-        🛒 Your cart is empty.
-      </p>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-16 w-16 text-[#d5b56e] mb-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+          />
+        </svg>
+        <p className="text-2xl text-white mb-6">Your cart is empty</p>
+        <Link
+          to="/"
+          className="bg-[#d5b56e] hover:bg-[#c19a3d] text-black font-bold py-3 px-8 rounded-md transition duration-300"
+        >
+          Continue Shopping
+        </Link>
+      </div>
     );
   }
 
   return (
-    <div className="w-full min-h-[80vh] flex justify-center items-start mt-6 px-2 sm:px-4 md:px-6">
-      <div className="w-full max-w-4xl bg-white/5 backdrop-blur-md text-black p-4 sm:p-6 rounded-xl border border-[#d5b56e] shadow-2xl font-arkhip">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-black text-center sm:text-left">
-          Your Cart
-        </h2>
+    <div className="bg-black min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-base sm:text-xl md:text-3xl lg:text-4xl font-bold text-[#d5b56e] mb-10 text-center">
+          Your Shopping Cart
+        </h1>
 
-        <div className="space-y-6">
-          {cart.products.map((item) => (
-            <div
-              key={item._id}
-              className="flex flex-col sm:flex-row justify-between sm:items-center border-b border-[#d5b56e] py-3 sm:py-4 gap-1"
-            >
-              <div>
-                <p className="text-base sm:text-lg font-semibold">
-                  {item.productId?.title || "Unknown Product"}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-700">
-                  Quantity: {item.quantity}
-                </p>
-              </div>
-              <p className="text-sm sm:text-base text-black font-bold">
-                Rs{" "}
-                {item.productId?.price
-                  ? item.productId.price * item.quantity
-                  : "N/A"}
-              </p>
+        <div className="bg-black/70 backdrop-blur-sm border border-[#d5b56e]/30 rounded-lg p-6 shadow-lg shadow-[#d5b56e]/10">
+          <div className="space-y-6 mb-8">
+            {cart.products.map((item) => (
+              <CartItem key={item._id} item={item} />
+            ))}
+          </div>
+
+          <div className="flex justify-between items-center border-t border-[#d5b56e]/30 pt-6">
+            <div className="text-2xl font-bold text-white">Total:</div>
+            <div className="text-2xl font-bold text-[#d5b56e]">
+              ${cart.totalAmount.toFixed(2)}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="text-right mt-6 text-lg sm:text-xl font-semibold text-black">
-          Total: Rs {cart.totalAmount}
-        </div>
-
-        <div className="text-right mt-6">
-          <Link
-            to="/checkout"
-            className="inline-block bg-[#d5b56e] text-black px-4 sm:px-6 py-2 rounded text-sm sm:text-base font-semibold hover:bg-black transition"
-          >
-            Proceed to Checkout
-          </Link>
+          <div className="mt-10 flex text-xs sm:text-sm md:text-base text-[#d5b56e] justify-end space-x-4">
+            <Link
+              to="/"
+              className="bg-transparent border border-[#d5b56e]  hover:bg-[#d5b56e]/10 font-bold py-3 px-8 rounded-md transition duration-300"
+            >
+              Continue Shopping
+            </Link>
+            <Link
+              to="/checkout"
+              className="bg-transparent border border-[#d5b56e]  hover:bg-[#d5b56e]/10 font-bold py-3 px-8 rounded-md transition duration-300"
+              
+            >
+              Proceed to Checkout
+            </Link>
+          </div>
         </div>
       </div>
     </div>

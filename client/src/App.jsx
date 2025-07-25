@@ -48,7 +48,9 @@ export default function App() {
   if (!checked || !authReady) return <Loader message="Initializing..." />;
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] px-4 sm:px-6 lg:px-12 py-6">
+    // <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] px-4 sm:px-6 lg:px-12 py-6">
+    <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] ">
+
       <ToastContainer position="top-right" autoClose={3000} />
       <Navbar />
 

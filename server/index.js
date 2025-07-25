@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5000;
 //  Middleware Setup
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://shopceenamicom.vercel.app/", // replace with your frontend domain
+    origin: process.env.CLIENT_URL || "http://localhost:5173", // replace with your frontend domain
     credentials: true, // Allow cookies across origins
   }),
 );

@@ -1,5 +1,5 @@
-// src/components/errors/ErrorBoundary.jsx
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -18,13 +18,23 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex flex-col items-center justify-center text-center text-white p-4">
-          <h1 className="text-3xl font-bold text-[#d5b56e]">
-            Something went wrong.
-          </h1>
-          <p className="text-lg mt-2">
-            Please refresh the page or try again later.
-          </p>
+        <div className="min-h-screen bg-black flex items-center justify-center p-4">
+          <div className="bg-black/80 backdrop-blur-md border border-[#d5b56e]/30 rounded-xl p-8 sm:p-10 text-center max-w-md w-full">
+            <div className="text-6xl text-[#d5b56e] mb-4">⚠️</div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#d5b56e] mb-4">
+              Something Went Wrong
+            </h1>
+            <p className="text-white/80 mb-6">
+              We've encountered an unexpected error. Please try again later.
+            </p>
+            <div className="h-1 w-20 bg-[#d5b56e] mx-auto mb-6"></div>
+            <Link
+              to="/"
+              className="inline-block bg-[#d5b56e] hover:bg-[#c19a3d] text-black font-bold py-2 px-6 rounded transition-colors"
+            >
+              Return Home
+            </Link>
+          </div>
         </div>
       );
     }
