@@ -21,10 +21,14 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import ManageOrders from "./pages/admin/ManageOrders";
 import ManageLeads from "./pages/admin/ManageLeads";
+import { useGetProductsQuery } from "./features/products/productApiSlice";
 export default function App() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
   const { authReady } = useSelector((state) => state.auth);
+  const { data: productsData } = useGetProductsQuery();
+const products = productsData?.data || [];
+  // const products = [];
 
   useEffect(() => {
     const run = async () => {
@@ -52,7 +56,8 @@ export default function App() {
     <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] ">
 
       <ToastContainer position="top-right" autoClose={3000} />
-      <Navbar />
+      {/* Only show Navbar when there are products */}
+      {products.length > 0 && <Navbar />}
 
       {/*  Only render Routes AFTER auth is ready */}
       <Routes>

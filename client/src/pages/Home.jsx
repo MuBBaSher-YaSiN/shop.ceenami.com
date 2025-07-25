@@ -9,8 +9,7 @@ export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductsQuery();
   const products = data?.data || [];
-  // const products =[];
-
+  // const products = []; // For testing empty state
 
   if (!authReady) return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -21,16 +20,47 @@ export default function Home() {
     </div>
   );
 
+  // When there are no products, show only the countdown and coming soon card
+  if (products.length === 0) {
+    return (
+      <div className="min-h-screen w-full bg-black flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl">
+          <div className="bg-black/70 backdrop-blur-md border border-[#d5b56e] rounded-2xl p-8 sm:p-12 mx-auto shadow-lg shadow-[#d5b56e]/20">
+            <div className="mb-8 text-center">
+              <h3 className="text-3xl font-bold text-[#d5b56e] mb-4">
+                Something Amazing is Coming
+              </h3>
+              <p className="text-white/90 text-lg mb-6">
+                We're preparing an exclusive collection just for you. Be the first to know when we launch!
+              </p>
+              
+              {/* Centered Countdown Timer */}
+              <div className="flex justify-center mb-8">
+                <CountdownTimer />
+              </div>
+              
+              <div className="flex justify-center space-x-2 mb-6">
+                <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse"></div>
+                <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+              </div>
+            </div>
+            
+            <div className="bg-black/40 rounded-xl p-6 border border-[#d5b56e]/20">
+              <LeadForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Normal render when products exist
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          // style={{
-          //   backgroundImage: "url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80')"
-          // }}
-        >
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat">
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
 
@@ -74,33 +104,7 @@ export default function Home() {
                 <p className="text-red-400 text-sm mt-2">Please try refreshing the page</p>
               </div>
             </div>
-          ) : products.length === 0 ? (
-  <div className="text-center py-20">
-    <div className="bg-black/70 backdrop-blur-md border border-[#d5b56e] rounded-2xl p-8 sm:p-12 max-w-2xl mx-auto shadow-lg shadow-[#d5b56e]/20">
-      <div className="mb-8">
-        <h3 className="text-3xl font-bold text-[#d5b56e] mb-4">
-          Something Amazing is Coming
-        </h3>
-        <p className="text-white/90 text-lg mb-6">
-          We're preparing an exclusive collection just for you. Be the first to know when we launch!
-        </p>
-        
-        {/* Add the CountdownTimer component */}
-        <CountdownTimer />
-        
-        <div className="flex justify-center space-x-2 mb-6">
-          <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse"></div>
-          <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-          <div className="w-3 h-3 bg-[#d5b56e] rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-        </div>
-      </div>
-      
-      <div className="bg-black/40 rounded-xl p-6 border border-[#d5b56e]/20">
-        <LeadForm />
-      </div>
-    </div>
-  </div>
-)  : (
+          ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center">
               {products.map((product) => product && product._id && (
                 <div key={product._id} className="transform transition-all duration-300 hover:scale-105">
