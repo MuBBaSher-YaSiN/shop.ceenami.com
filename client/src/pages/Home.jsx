@@ -27,9 +27,9 @@ export default function Home() {
       <div className="relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80')"
-          }}
+          // style={{
+          //   backgroundImage: "url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80')"
+          // }}
         >
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
