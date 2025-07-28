@@ -8,8 +8,8 @@ import CountdownTimer from "../components/CountdownTimer";
 export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductsQuery();
-  const products = data?.data || [];
-  // const products = []; // For testing empty state
+  // const products = data?.data || [];
+  const products = []; // For testing empty state
 
   if (!authReady) return (
     <div className="min-h-screen bg-black flex items-center justify-center">

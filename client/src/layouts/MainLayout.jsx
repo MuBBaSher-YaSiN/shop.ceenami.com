@@ -1,6 +1,6 @@
 // src/layouts/MainLayout.jsx
 import { Outlet } from "react-router-dom";
-import logo from "../assets/golden-logo.png";
+import logo from "../assets/golden-logo.webp";
 
 export default function MainLayout() {
   return (

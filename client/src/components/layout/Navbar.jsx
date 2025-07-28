@@ -1,6 +1,6 @@
 // src/components/layout/Navbar.jsx
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/golden-logo.png";
+import logo from "../../assets/golden-logo.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../features/auth/authApiSlice";
 import { logout as logoutAction } from "../../features/auth/authSlice";
