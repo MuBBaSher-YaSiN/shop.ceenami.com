@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { useCreateProductMutation } from "../../features/products/productApiSlice";
+import { useEffect, useState } from "react";
+import {
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} from "../../features/products/productApiSlice";
 import { toast } from "react-toastify";
 import Loader from "../ui/Loader";
 
-export default function AddProductModal({ onClose }) {
+export default function AddProductModal({ onClose, editMode = false, initialData = null }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -16,7 +19,24 @@ export default function AddProductModal({ onClose }) {
     color: "",
   });
 
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [createProduct, { isLoading: creating }] = useCreateProductMutation();
+  const [updateProduct, { isLoading: updating }] = useUpdateProductMutation();
+
+  useEffect(() => {
+    if (editMode && initialData) {
+      setFormData({
+        title: initialData.title || "",
+        description: initialData.description || "",
+        price: initialData.price || "",
+        image1: initialData.images?.[0] || "",
+        image2: initialData.images?.[1] || "",
+        category: initialData.category || "",
+        brand: initialData.brand || "",
+        size: initialData.size || "",
+        color: initialData.color || "",
+      });
+    }
+  }, [editMode, initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +46,7 @@ export default function AddProductModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const productPayload = {
+    const payload = {
       title: formData.title,
       description: formData.description,
       price: Number(formData.price),
@@ -38,11 +58,16 @@ export default function AddProductModal({ onClose }) {
     };
 
     try {
-      await createProduct(productPayload).unwrap();
-      toast.success("Product created successfully");
+      if (editMode && initialData?._id) {
+        await updateProduct({ id: initialData._id, updatedData: payload }).unwrap();
+        toast.success("Product updated successfully");
+      } else {
+        await createProduct(payload).unwrap();
+        toast.success("Product created successfully");
+      }
       onClose();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to create product");
+      toast.error(err?.data?.message || `Failed to ${editMode ? "update" : "create"} product`);
     }
   };
 
@@ -56,13 +81,10 @@ export default function AddProductModal({ onClose }) {
           &times;
         </button>
         <h2 className="text-lg font-bold mb-4 text-[#d5b56e]">
-          Add New Product
+          {editMode ? "Edit Product" : "Add New Product"}
         </h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-3 text-sm sm:text-base"
-        >
+        <form onSubmit={handleSubmit} className="space-y-3 text-sm sm:text-base">
           <input
             type="text"
             name="title"
@@ -98,7 +120,6 @@ export default function AddProductModal({ onClose }) {
             onChange={handleChange}
             className="input"
           />
-
           <input
             type="text"
             name="image1"
@@ -117,7 +138,6 @@ export default function AddProductModal({ onClose }) {
             onChange={handleChange}
             className="input"
           />
-
           <input
             type="text"
             name="brand"
@@ -145,10 +165,10 @@ export default function AddProductModal({ onClose }) {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={creating || updating}
             className="w-full bg-[#d5b56e] text-black py-2 rounded hover:bg-yellow-600 font-semibold"
           >
-            {isLoading ? <Loader small /> : "Create Product"}
+            {(creating || updating) ? <Loader small /> : editMode ? "Update Product" : "Create Product"}
           </button>
         </form>
       </div>

@@ -40,6 +40,9 @@ export default function ManageOrders() {
                   <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-[#d5b56e] uppercase tracking-wider">
                     Amount
                   </th>
+                  <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-[#d5b56e] uppercase tracking-wider">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#d5b56e]/10">
@@ -53,10 +56,19 @@ export default function ManageOrders() {
                       <div className="text-white/70">{order.user?.email}</div>
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-white">
-                      {order.items?.length || 0} items
+                      {order.products?.length || 0} items
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-white">
-                      <span className="text-[#d5b56e] font-bold">Rs {order.amount}</span>
+                      <span className="text-[#d5b56e] font-bold">Rs {order.totalAmount || order.amount}</span>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm text-white">
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        order.paymentStatus === 'paid' 
+                          ? 'bg-green-900/30 text-green-400' 
+                          : 'bg-yellow-900/30 text-yellow-400'
+                      }`}>
+                        {order.paymentStatus}
+                      </span>
                     </td>
                   </tr>
                 ))}
