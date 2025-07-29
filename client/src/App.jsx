@@ -22,6 +22,7 @@ import OrderSuccess from "./pages/OrderSuccess";
 import ManageOrders from "./pages/admin/ManageOrders";
 import ManageLeads from "./pages/admin/ManageLeads";
 import { useGetProductsQuery } from "./features/products/productApiSlice";
+import NewNav from "./components/layout/NewNav"; 
 export default function App() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
@@ -58,10 +59,14 @@ export default function App() {
       <ToastContainer position="top-right" autoClose={3000} />
       {/* Only show Navbar when there are products */}
       {products.length > 0 && <Navbar />}
-
+{/* Show NewNav only when NO products */}
+      {products.length === 0 && <NewNav />}
       {/*  Only render Routes AFTER auth is ready */}
       <Routes>
         <Route path="/" element={<Home />} />
+          {/* Restrict all other routes when no products */}
+          {products.length > 0 ? (
+          <>
         <Route path="/register" element={<Register />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/login" element={<Login />} />
@@ -87,6 +92,11 @@ export default function App() {
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/products" element={<ManageProducts />} />
         </Route>
+        </>
+        ) : (
+          //  If products empty, redirect all unknown paths to Home
+          <Route path="*" element={<Home />} />
+        )}
       </Routes>
     </div>
   );

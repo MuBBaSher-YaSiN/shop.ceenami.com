@@ -4,7 +4,7 @@ import { useGetProductsQuery } from "../features/products/productApiSlice";
 import ProductCard from "../components/ProductCard";
 import LeadForm from "../components/forms/LeadForm";
 import CountdownTimer from "../components/CountdownTimer";
-
+import NewNav from "../components/layout/NewNav"; 
 export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductsQuery();
@@ -23,13 +23,13 @@ export default function Home() {
   // When there are no products, show only the countdown and coming soon card
   if (products.length === 0) {
     return (
-      <div className="min-h-screen w-full bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen w-full pt-28 bg-black flex items-center justify-center p-4">
         <div className="w-full max-w-2xl">
           <div className="bg-black/70 backdrop-blur-md border border-[#d5b56e] rounded-2xl p-8 sm:p-12 mx-auto shadow-lg shadow-[#d5b56e]/20">
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-[#d5b56e] mb-4">
+              <h2 className="text-3xl font-bold text-[#d5b56e] mb-4">
                 Something Amazing is Coming
-              </h1>
+              </h2>
               <p className="text-white/90 text-lg mb-6">
                 Ceenami is Launching the first true Clothing Brand for Artists. Be the first to know when we launch!
               </p>
@@ -57,6 +57,7 @@ export default function Home() {
 
   // Normal render when products exist
   return (
+    <>
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
@@ -118,5 +119,14 @@ export default function Home() {
 
       <div className="h-2 bg-gradient-to-r from-[#c9a95d] via-yellow-500 to-[#c9a95d]"></div>
     </div>
+      {products.length > 0 && (
+  <footer className="bg-black border-t border-[#d5b56e]/20 py-8 mt-10">
+    <div className="max-w-7xl mx-auto px-4">
+      <NewNav /> {/* Placed at bottom only when products exist */}
+    </div>
+  </footer>
+)}
+  </>
+
   );
 }
