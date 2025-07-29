@@ -6,6 +6,7 @@ export default function Footer() {
     {
       name: "Ceenami Haus",
       url: "https://ceenamihaus-ceenami-com.vercel.app/",
+      external: true,
     },
     {
       name: "CleanNami",

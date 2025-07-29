@@ -15,11 +15,20 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const links = [
-    { name: 'Ceenami Haus', url: '/' },
-    { name: 'CleanNami', url: 'https://cleannami-ceenami-com.vercel.app/', external: true },
-    { name: 'Ceenami Music', url: 'https://ceenami.com', external: true }
+   const links = [
+    {
+      name: "Ceenami Haus",
+      url: "https://ceenamihaus-ceenami-com.vercel.app/",
+      external: true,
+    },
+    {
+      name: "CleanNami",
+      url: "https://cleannami-ceenami-com.vercel.app/",
+      external: true,
+    },
+    { name: "Ceenami Music", url: "", external: true },
   ];
+
 
   return (
     <nav className={`w-full fixed top-0 left-0 z-50 ${scrolled ? 'bg-black/95 backdrop-blur-sm border-b border-[#d5b56e]/20' : 'bg-black'}`}>
