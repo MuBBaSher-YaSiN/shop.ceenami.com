@@ -74,7 +74,7 @@ export default function Login() {
           
           <div className="px-8 py-10">
             <div className="text-center mb-8">
-              <h1 className=" font-bold text-[#d5b56e] mb-2">Welcome Back</h1>
+              <h2 className="text-3xl font-bold text-[#d5b56e] mb-2">Welcome Back</h2>
               <p className="text-white/80">Sign in to your account</p>
             </div>
 

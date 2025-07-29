@@ -8,9 +8,9 @@ export default function AdminLayout({ children }) {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <aside className="lg:w-64 w-full bg-black/70 backdrop-blur-md border border-[#d5b56e]/30 rounded-xl p-4">
-            <h1 className="text-xl font-bold mb-6 text-[#d5b56e] border-b border-[#d5b56e]/30 pb-3">
+            <h2 className="text-xl font-bold mb-6 text-[#d5b56e] border-b border-[#d5b56e]/30 pb-3">
               Admin Panel
-            </h1>
+            </h2>
             <nav className="space-y-3 text-white/80">
               <Link
                 to="/dashboard"

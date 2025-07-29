@@ -8,8 +8,8 @@ import CountdownTimer from "../components/CountdownTimer";
 export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductsQuery();
-  const products = data?.data || [];
-  // const products = []; // For testing empty state
+  // const products = data?.data || [];
+  const products = []; // For testing empty state
 
   if (!authReady) return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -31,7 +31,7 @@ export default function Home() {
                 Something Amazing is Coming
               </h1>
               <p className="text-white/90 text-lg mb-6">
-                We're preparing an exclusive collection just for you. Be the first to know when we launch!
+                Ceenami is Launching the first true Clothing Brand for Artists. Be the first to know when we launch!
               </p>
               
               {/* Centered Countdown Timer */}
