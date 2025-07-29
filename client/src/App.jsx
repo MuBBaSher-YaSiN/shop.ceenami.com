@@ -27,8 +27,8 @@ export default function App() {
   const [checked, setChecked] = useState(false);
   const { authReady } = useSelector((state) => state.auth);
   const { data: productsData } = useGetProductsQuery();
-// const products = productsData?.data || [];
-  const products = [];
+const products = productsData?.data || [];
+  // const products = [];
 
   useEffect(() => {
     const run = async () => {

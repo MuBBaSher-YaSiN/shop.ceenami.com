@@ -55,7 +55,7 @@ export default function Register() {
           
           <div className="px-8 py-10">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-[#d5b56e] mb-2">Create Account</h2>
+              <h1 className="text-3xl font-bold text-[#d5b56e] mb-2">Create Account</h1>
               <p className="text-white/80">Join our exclusive community</p>
             </div>
 

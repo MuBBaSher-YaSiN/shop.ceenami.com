@@ -8,8 +8,8 @@ import CountdownTimer from "../components/CountdownTimer";
 export default function Home() {
   const { user, authReady } = useSelector((state) => state.auth);
   const { data, isLoading, isError } = useGetProductsQuery();
-  // const products = data?.data || [];
-  const products = []; // For testing empty state
+  const products = data?.data || [];
+  // const products = []; // For testing empty state
 
   if (!authReady) return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -27,9 +27,9 @@ export default function Home() {
         <div className="w-full max-w-2xl">
           <div className="bg-black/70 backdrop-blur-md border border-[#d5b56e] rounded-2xl p-8 sm:p-12 mx-auto shadow-lg shadow-[#d5b56e]/20">
             <div className="mb-8 text-center">
-              <h3 className="text-3xl font-bold text-[#d5b56e] mb-4">
+              <h1 className="text-3xl font-bold text-[#d5b56e] mb-4">
                 Something Amazing is Coming
-              </h3>
+              </h1>
               <p className="text-white/90 text-lg mb-6">
                 We're preparing an exclusive collection just for you. Be the first to know when we launch!
               </p>
