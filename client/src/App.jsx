@@ -22,14 +22,15 @@ import OrderSuccess from "./pages/OrderSuccess";
 import ManageOrders from "./pages/admin/ManageOrders";
 import ManageLeads from "./pages/admin/ManageLeads";
 import { useGetProductsQuery } from "./features/products/productApiSlice";
-import NewNav from "./components/layout/NewNav"; 
+import NewNav from "./components/layout/NewNav";
+import Footer from "./components/layout/footer";
 export default function App() {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
   const { authReady } = useSelector((state) => state.auth);
   const { data: productsData } = useGetProductsQuery();
-// const products = productsData?.data || [];
-  const products = []; //For testing empty state
+  const products = productsData?.data || [];
+  // const products = []; //For testing empty state
 
   useEffect(() => {
     const run = async () => {
@@ -53,51 +54,50 @@ export default function App() {
   if (!checked || !authReady) return <Loader message="Initializing..." />;
 
   return (
-    // <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] px-4 sm:px-6 lg:px-12 py-6">
-    <div className="min-h-screen w-full bg-gradient-to-br from-white via-[#f4f4ff] to-[#0915ac]/20 text-[#091636] ">
-
+    <div className="min-h-screen w-full text-[#091636] ">
       <ToastContainer position="top-right" autoClose={3000} />
       {/* Only show Navbar when there are products */}
-      {products.length > 0 && <Navbar />}
-{/* Show NewNav only when NO products */}
-      {products.length === 0 && <NewNav />}
+      {products.length > 0 ? <Navbar /> : <NewNav />}
+
       {/*  Only render Routes AFTER auth is ready */}
       <Routes>
         <Route path="/" element={<Home />} />
-          {/* Restrict all other routes when no products */}
-          {products.length > 0 ? (
+        {/* Restrict all other routes when no products */}
+        {products.length > 0 ? (
           <>
-        <Route path="/register" element={<Register />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/order-success" element={<OrderSuccess />} />
-        {/*  Protected Routes */}
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/checkout" element={<Checkout />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/admin/orders" element={<ManageOrders />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/admin/leads" element={<ManageLeads />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/cart" element={<Cart />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/dashboard" element={<AdminDashboard />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/products" element={<ManageProducts />} />
-        </Route>
-        </>
+            <Route path="/register" element={<Register />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+            {/*  Protected Routes */}
+            <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+              <Route path="/checkout" element={<Checkout />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route path="/admin/orders" element={<ManageOrders />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route path="/admin/leads" element={<ManageLeads />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+              <Route path="/cart" element={<Cart />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route path="/dashboard" element={<AdminDashboard />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route path="/products" element={<ManageProducts />} />
+            </Route>
+          </>
         ) : (
           //  If products empty, redirect all unknown paths to Home
           <Route path="*" element={<Home />} />
         )}
       </Routes>
+      {/* Only show footer when products are present */}
+      {products.length > 0 && <Footer />}
     </div>
   );
 }

@@ -36,11 +36,13 @@ export default function Navbar() {
               <div className="relative">
                 {/* Glow effect behind logo */}
                 <div className="absolute inset-0 bg-[#d5b56e]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <img
+                <h1>
+                   <img
                   src={logo}
                   alt="Ceenami Logo"
                   className="relative w-12 sm:w-36 md:w-40 lg:w-48 xl:w-56 2xl:w-64 h-16 sm:h-20 object-contain transition-transform duration-300 group-hover:scale-105"
                 />
+                </h1>
               </div>
             </Link>
           </div>
