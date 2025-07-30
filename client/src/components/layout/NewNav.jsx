@@ -44,7 +44,7 @@ export default function Navbar() {
               alt="Ceenami Logo" 
               className="h-10 w-10 object-contain"
             />
-            <span className="text-[#d5b56e] font-bold text-lg hidden sm:inline">Ceenami Haus</span>
+            <span className="text-[#d5b56e] font-bold text-lg hidden sm:inline">Ceenami</span>
           </Link>
 
           {/* Desktop Links */}
