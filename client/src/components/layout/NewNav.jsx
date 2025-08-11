@@ -70,6 +70,12 @@ export default function Navbar() {
                 </Link>
               )
             ))}
+            <Link
+                  to='/dashboard'
+                  className="text-white hover:text-[#f0e0b0] transition-colors duration-200 font-medium"
+                >
+                  Dashboard
+                </Link>
           </div>
 
           {/* Mobile menu button */}

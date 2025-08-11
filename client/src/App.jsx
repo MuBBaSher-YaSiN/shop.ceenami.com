@@ -75,14 +75,31 @@ export default function App() {
             <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
               <Route path="/checkout" element={<Checkout />} />
             </Route>
-            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+              <Route path="/cart" element={<Cart />} />
+            </Route>
+             {/* <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+             <Route path="/admin/orders" element={<ManageOrders />} />
+             </Route>
+             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+               <Route path="/admin/leads" element={<ManageLeads />} />
+             </Route>
+             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+               <Route path="/dashboard" element={<AdminDashboard />} />
+             </Route>
+             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+               <Route path="/products" element={<ManageProducts />} />
+             </Route> */}
+          </>
+        ) : (
+          <>
+          {/* If products empty, redirect all unknown paths to Home */}
+          <Route path="*" element={<Home />} />
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
               <Route path="/admin/orders" element={<ManageOrders />} />
             </Route>
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
               <Route path="/admin/leads" element={<ManageLeads />} />
-            </Route>
-            <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-              <Route path="/cart" element={<Cart />} />
             </Route>
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
               <Route path="/dashboard" element={<AdminDashboard />} />
@@ -90,10 +107,8 @@ export default function App() {
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
               <Route path="/products" element={<ManageProducts />} />
             </Route>
-          </>
-        ) : (
-          //  If products empty, redirect all unknown paths to Home
-          <Route path="*" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            </>
         )}
       </Routes>
       {/* Only show footer when products are present */}
